@@ -1,0 +1,98 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+@import "https://fonts.googleapis.com/css?family=Nunito:200,600";
+
+//custom style
+body {
+    color:#222;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    line-height:1.6;
+    margin:0;
+    background: #fff;
+    margin:auto;
+    // color:rgb(10, 10, 10);
+  }
+
+//   a {outline:none !important; font-weight:bold; text-decoration:none;}
+//   a:link {color:#c00;}
+//   a:visited {color:#606;}
+//   a:hover {color:#606;}
+//   a:active {color:#900; outline:none;}
+
+  h1 {
+    font-size:200%;
+    line-height:1.35;
+    font-style:normal;
+    margin:1.5em 0 0.8em;
+  }
+
+  h2 {
+    font-weight:bold;
+    font-size:110%;
+  }
+
+  h3 {
+    font-weight:bold;
+    text-transform:uppercase;
+    font-size:100%;
+    letter-spacing:0.15em;
+    // margin:1.75em 0 0.8em;
+  }
+
+  h4 {
+    font-weight:normal;
+    font-size:150%;
+    letter-spacing:0.1em;
+    margin:1.5em 0 0.8em;
+  }
+
+  h5 {
+    font-weight:normal;
+    font-style:italic;
+    font-size:150%;
+    margin:1.5em 0 0.8em;
+  }
+
+  h6 {
+    font-weight:bold;
+    font-size:80%;
+    letter-spacing:0.1em;
+  }
+
+  p {
+    text-align:left;
+    font-size:100%;
+    margin:1em 0 0;
+  }
+
+  p.lead {
+    font-size:150%;
+    margin:1em 0;
+  }
+
+  p + p {
+    margin:0;
+    text-indent:1.5em;
+  }
+
+  p + ul, p + ol, p + dl {margin-bottom:1.5em;}
+  p.lead + p {
+    text-indent:0;
+  }
+
+  blockquote {border-left:5px solid #eee; padding-left:1.5em; margin:1em 0;}
+  blockquote small {display:block; line-height:1.7em;}
+  ul, ol, dl {
+    text-align:left;
+  }
+
+  dt {font-weight:bold;}
+  code {font-family:courier, monospace;}
+  p > code {padding:0.25em; background:#eee;}
+  pre {text-align:left; font-size:100%;}
+  hr {height:0; margin:1em 0 1em;}

@@ -46,7 +46,7 @@ const actions = {
                 name: cook.name,
                 email: cook.email,
             }).then(res => {
-                context.commit('cookCreated', res.data)
+                context.commit('cookUpdated', res.data)
                 resolve(res)
             }).catch(err => {
                 console.log(err)
@@ -85,6 +85,19 @@ const mutations = {
 
     updateEmail: (state, email) => {
         state.cookUnderEdit.email = email
+    },
+
+    cookUpdated: (state, cook) => {
+
+        state.modal = false
+
+        const index = state.cooks.findIndex(i => i.id == cook.id)
+
+        state.cooks.splice(index, 1, {
+            id: cook.id,
+            name: cook.name,
+            email: cook.email
+        })
     }
 };
 

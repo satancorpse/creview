@@ -3621,7 +3621,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Edit")]
+                    [_vm._v("Update")]
                   )
                 ]),
                 _vm._v(" "),
@@ -20734,7 +20734,7 @@ var actions = {
         name: cook.name,
         email: cook.email
       }).then(function (res) {
-        context.commit('cookCreated', res.data);
+        context.commit('cookUpdated', res.data);
         resolve(res);
       })["catch"](function (err) {
         console.log(err);
@@ -20767,6 +20767,17 @@ var mutations = {
   },
   updateEmail: function updateEmail(state, email) {
     state.cookUnderEdit.email = email;
+  },
+  cookUpdated: function cookUpdated(state, cook) {
+    state.modal = false;
+    var index = state.cooks.findIndex(function (i) {
+      return i.id == cook.id;
+    });
+    state.cooks.splice(index, 1, {
+      id: cook.id,
+      name: cook.name,
+      email: cook.email
+    });
   }
 };
 var getters = {

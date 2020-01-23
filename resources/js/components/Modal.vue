@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <button type="submit" class="px-6 py-2 bg-teal-500 text-white" @click.prevent="editCook(cook)">Edit</button>
+            <button type="submit" class="px-6 py-2 bg-teal-500 text-white" @click.prevent="editCook(cook)">Update</button>
         </form>
 
         <!--Footer-->

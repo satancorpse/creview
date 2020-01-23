@@ -34,9 +34,9 @@
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="name"
-                        v-model="name"
                         type="text"
-                        placeholder="Full name"
+                        :value="cook.name"
+                        @input="getName"
                     />
                 </div>
             </div>
@@ -51,14 +51,15 @@
                     <input
                         class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         id="email"
-                        v-model="name"
                         type="email"
                         placeholder="Enter a valid email ID"
+                        :value="cook.email"
+                        @input="getEmail"
                     />
                 </div>
             </div>
 
-            <button type="submit" class="px-6 py-2 bg-teal-500 text-white" @click.prevent="editCook(cook.id)">Edit</button>
+            <button type="submit" class="px-6 py-2 bg-teal-500 text-white" @click.prevent="editCook(cook)">Edit</button>
         </form>
 
         <!--Footer-->
@@ -79,13 +80,12 @@ export default {
 
     data() {
         return {
-            name: this.show,
-            email: ''
+            form: {}
         }
     },
 
     mounted() {
-        console.log(this.show)
+        // console.log(this.$store.state)
     },
 
     computed: {
@@ -99,6 +99,18 @@ export default {
         closeModal() {
             this.$store.dispatch('closeModal');
         },
+
+        getName(e) {
+            this.$store.commit('updateName', e.target.value)
+        },
+
+        getEmail(e) {
+            this.$store.commit('updateEmail', e.target.value)
+        },
+
+        editCook(cook) {
+            this.$store.dispatch('updateCook', cook)
+        }
     }
 }
 </script>

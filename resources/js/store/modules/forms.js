@@ -3,7 +3,7 @@ import axios from "axios";
 const state = {
     cooks: [],
     modal: false,
-    cookUnderEdit: {id: '', name: '', email: ''}
+    cookUnderEdit: {}
 };
 
 const actions = {
@@ -38,21 +38,6 @@ const actions = {
 
     closeModal: (context) => {
         context.commit('modalClosed')
-    },
-
-    updateCook: (context, cook) => {
-        return new Promise((resolve, reject) => {
-            axios.patch('/api/cooks/' + cook.id, {
-                name: cook.name,
-                email: cook.email,
-            }).then(res => {
-                context.commit('cookCreated', res.data)
-                resolve(res)
-            }).catch(err => {
-                console.log(err)
-                reject(err)
-            })
-        })
     }
 };
 
@@ -70,22 +55,12 @@ const mutations = {
 
     cookBeingEdited: (state, cook) => {
         state.modal = true
-        state.cookUnderEdit.id = cook.id
-        state.cookUnderEdit.name = cook.name
-        state.cookUnderEdit.email = cook.email
+        state.cookUnderEdit = cook
     },
 
     modalClosed: (state) => {
         state.modal = false
     },
-
-    updateName: (state, name) => {
-        state.cookUnderEdit.name = name
-    },
-
-    updateEmail: (state, email) => {
-        state.cookUnderEdit.email = email
-    }
 };
 
 const getters = {

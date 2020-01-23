@@ -2344,16 +2344,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      name: this.show,
-      email: ''
+      form: {}
     };
   },
-  mounted: function mounted() {
-    console.log(this.show);
+  mounted: function mounted() {// console.log(this.$store.state)
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     cook: 'cookUnderEdit',
@@ -2362,6 +2361,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     closeModal: function closeModal() {
       this.$store.dispatch('closeModal');
+    },
+    getName: function getName(e) {
+      this.$store.commit('updateName', e.target.value);
+    },
+    getEmail: function getEmail(e) {
+      this.$store.commit('updateEmail', e.target.value);
+    },
+    editCook: function editCook(cook) {
+      this.$store.dispatch('updateCook', cook);
     }
   }
 });
@@ -3562,30 +3570,11 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.name,
-                            expression: "name"
-                          }
-                        ],
                         staticClass:
                           "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-                        attrs: {
-                          id: "name",
-                          type: "text",
-                          placeholder: "Full name"
-                        },
-                        domProps: { value: _vm.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.name = $event.target.value
-                          }
-                        }
+                        attrs: { id: "name", type: "text" },
+                        domProps: { value: _vm.cook.name },
+                        on: { input: _vm.getName }
                       })
                     ])
                   ]),
@@ -3607,14 +3596,6 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.name,
-                            expression: "name"
-                          }
-                        ],
                         staticClass:
                           "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
                         attrs: {
@@ -3622,15 +3603,8 @@ var render = function() {
                           type: "email",
                           placeholder: "Enter a valid email ID"
                         },
-                        domProps: { value: _vm.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.name = $event.target.value
-                          }
-                        }
+                        domProps: { value: _vm.cook.email },
+                        on: { input: _vm.getEmail }
                       })
                     ])
                   ]),
@@ -3643,7 +3617,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.editCook(_vm.cook.id)
+                          return _vm.editCook(_vm.cook)
                         }
                       }
                     },
@@ -20719,7 +20693,11 @@ __webpack_require__.r(__webpack_exports__);
 var state = {
   cooks: [],
   modal: false,
-  cookUnderEdit: ''
+  cookUnderEdit: {
+    id: '',
+    name: '',
+    email: ''
+  }
 };
 var actions = {
   fetchCooks: function fetchCooks(context) {
@@ -20749,6 +20727,20 @@ var actions = {
   },
   closeModal: function closeModal(context) {
     context.commit('modalClosed');
+  },
+  updateCook: function updateCook(context, cook) {
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('/api/cooks/' + cook.id, {
+        name: cook.name,
+        email: cook.email
+      }).then(function (res) {
+        context.commit('cookCreated', res.data);
+        resolve(res);
+      })["catch"](function (err) {
+        console.log(err);
+        reject(err);
+      });
+    });
   }
 };
 var mutations = {
@@ -20763,10 +20755,18 @@ var mutations = {
   },
   cookBeingEdited: function cookBeingEdited(state, cook) {
     state.modal = true;
-    state.cookUnderEdit = cook;
+    state.cookUnderEdit.id = cook.id;
+    state.cookUnderEdit.name = cook.name;
+    state.cookUnderEdit.email = cook.email;
   },
   modalClosed: function modalClosed(state) {
     state.modal = false;
+  },
+  updateName: function updateName(state, name) {
+    state.cookUnderEdit.name = name;
+  },
+  updateEmail: function updateEmail(state, email) {
+    state.cookUnderEdit.email = email;
   }
 };
 var getters = {

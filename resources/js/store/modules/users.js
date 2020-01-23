@@ -16,22 +16,6 @@ const actions = {
 
     createUser: (context, data) => {
 
-        // return new Promise(resolve, reject) => {
-        //     axios.post('/api/users/register', {
-        //         name: data.name,
-        //         email: data.email,
-        //         password: data.password,
-        //         password_confirmation: data.password_confirmation
-        //     }).then(res => {
-        //         context.commit('userRegistered', res.data)
-        //         resolve(response)
-        //     }).catch(err => {
-        //         console.log(err)
-        //         reject(err)
-        //     })
-
-        // }
-
         return new Promise((resolve, reject) => {
             axios.post('/api/users/register', {
                 name: data.name,
@@ -46,10 +30,7 @@ const actions = {
                 reject(err)
             })
         })
-
-
-
-    }
+    },
 }
 
 const mutations = {

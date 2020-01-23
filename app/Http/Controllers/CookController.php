@@ -9,7 +9,7 @@ class CookController extends Controller
 {
     public function index() {
 
-        $cooks = Cook::all()->take(5);
+        $cooks = Cook::latest()->get()->take(5);
 
         return response()->json($cooks, 200);
     }

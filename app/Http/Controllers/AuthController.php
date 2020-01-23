@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     public function getUsers() {
 
-        $users = User::latest()->get();
+        $users = User::latest()->get()->take(5);
 
         return response()->json($users, 200);
     }

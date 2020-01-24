@@ -2,8 +2,7 @@ import axios from "axios";
 
 const state = {
     cooks: [],
-    modal: false,
-    cookUnderEdit: {id: '', name: '', email: ''}
+    selectedCook: {id: '', name: '', email: ''}
 };
 
 const actions = {
@@ -53,6 +52,18 @@ const actions = {
                 reject(err)
             })
         })
+    },
+
+    removeCook: (context, cook) => {
+        return new Promise((resolve, reject) => {
+            axios.delete('/api/cooks/' + cook.id).then(res => {
+                context.commit('cookRemoved', cook.id)
+                resolve(res)
+            }).catch(err => {
+                console.log(err)
+                reject(err)
+            })
+        })
     }
 };
 
@@ -68,28 +79,21 @@ const mutations = {
         })
     },
 
-    cookBeingEdited: (state, cook) => {
-        state.modal = true
-        state.cookUnderEdit.id = cook.id
-        state.cookUnderEdit.name = cook.name
-        state.cookUnderEdit.email = cook.email
-    },
-
-    modalClosed: (state) => {
-        state.modal = false
+    cookSelected: (state, cook) => {
+        state.selectedCook.id = cook.id
+        state.selectedCook.name = cook.name
+        state.selectedCook.email = cook.email
     },
 
     updateName: (state, name) => {
-        state.cookUnderEdit.name = name
+        state.selectedCook.name = name
     },
 
     updateEmail: (state, email) => {
-        state.cookUnderEdit.email = email
+        state.selectedCook.email = email
     },
 
     cookUpdated: (state, cook) => {
-
-        state.modal = false
 
         const index = state.cooks.findIndex(i => i.id == cook.id)
 
@@ -98,13 +102,18 @@ const mutations = {
             name: cook.name,
             email: cook.email
         })
+    },
+
+    cookRemoved: (state, cook) => {
+        const index = state.cooks.findIndex(i => i.id == cook.id) + 1
+
+        state.cooks.splice(index, 1)
     }
 };
 
 const getters = {
     cooks: state => state.cooks,
-    cookUnderEdit: state => state.cookUnderEdit,
-    showModal: state => state.modal
+    selectedCook: state => state.selectedCook,
 };
 
 export default {

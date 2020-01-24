@@ -16,7 +16,7 @@ body {
     background: #fff;
     margin:auto;
     // color:rgb(10, 10, 10);
-  }
+}
 
 //   a {outline:none !important; font-weight:bold; text-decoration:none;}
 //   a:link {color:#c00;}
@@ -24,75 +24,118 @@ body {
 //   a:hover {color:#606;}
 //   a:active {color:#900; outline:none;}
 
-  h1 {
+h1 {
     font-size:200%;
     line-height:1.35;
     font-style:normal;
     margin:1.5em 0 0.8em;
-  }
+}
 
-  h2 {
+h2 {
     font-weight:bold;
     font-size:110%;
-  }
+}
 
-  h3 {
+h3 {
     font-weight:bold;
     text-transform:uppercase;
     font-size:100%;
     letter-spacing:0.15em;
     // margin:1.75em 0 0.8em;
-  }
+}
 
-  h4 {
+h4 {
     font-weight:normal;
     font-size:150%;
     letter-spacing:0.1em;
     margin:1.5em 0 0.8em;
-  }
+}
 
-  h5 {
+h5 {
     font-weight:normal;
     font-style:italic;
     font-size:150%;
     margin:1.5em 0 0.8em;
-  }
+}
 
-  h6 {
+h6 {
     font-weight:bold;
     font-size:80%;
     letter-spacing:0.1em;
-  }
+}
 
-  p {
+p {
     text-align:left;
     font-size:100%;
     margin:1em 0 0;
-  }
+}
 
-  p.lead {
-    font-size:150%;
-    margin:1em 0;
-  }
-
-  p + p {
+p + p {
     margin:0;
     text-indent:1.5em;
-  }
+}
 
-  p + ul, p + ol, p + dl {margin-bottom:1.5em;}
-  p.lead + p {
-    text-indent:0;
-  }
+p + ul, p + ol, p + dl {margin-bottom:1.5em;}
 
-  blockquote {border-left:5px solid #eee; padding-left:1.5em; margin:1em 0;}
-  blockquote small {display:block; line-height:1.7em;}
-  ul, ol, dl {
-    text-align:left;
-  }
 
-  dt {font-weight:bold;}
-  code {font-family:courier, monospace;}
-  p > code {padding:0.25em; background:#eee;}
-  pre {text-align:left; font-size:100%;}
-  hr {height:0; margin:1em 0 1em;}
+blockquote {border-left:5px solid #eee; padding-left:1.5em; margin:1em 0;}
+blockquote small {display:block; line-height:1.7em;}
+ul, ol, dl { text-align:left; }
+
+dt {font-weight:bold;}
+code {font-family:courier, monospace;}
+p > code {padding:0.25em; background:#eee;}
+pre {text-align:left; font-size:100%;}
+hr {height:0; margin:1em 0 1em;}
+
+label { @apply .block .uppercase .tracking-wide .text-gray-700 .text-xs .font-bold .mb-2 }
+input {
+    @apply .appearance-none .block .w-full .bg-gray-200 .text-gray-700 .border .border-gray-200 .rounded .py-3 .px-4 .mb-3 .leading-tight;
+    &:focus { @apply .outline-none .bg-white .border-gray-500 }
+}
+
+//ui elements
+.btn-primary {
+    @apply .px-6 .py-2 .bg-green-600 .text-white .rounded;
+
+    &:hover { @apply .bg-green-700 }
+}
+
+.btn-warning {
+    @apply .cursor-pointer .px-6 .py-2 .border .border-red-300 .rounded .text-black;
+
+    &:hover { @apply .border-red-400 }
+}
+
+.btn-edit {
+    @apply .border .border-teal-300 .px-5 .py-1 .text-teal-500 .font-semibold .text-xs;
+
+    &:hover { @apply .text-teal-700 .border-teal-400 }
+}
+
+.btn-remove {
+    @apply .border .border-red-200 .px-5 .py-1 .text-red-800 .font-semibold .text-xs;
+
+    &:hover { @apply .border-red-300 .text-red-900 }
+}
+
+//Modal
+.modal {
+    @apply  .fixed .w-full .h-full .top-0 .left-0 .flex .items-center .justify-center;
+
+    .modal-overlay {
+        @apply  .absolute .w-full .h-full .bg-gray-900 .opacity-50
+    }
+
+    .modal-container {
+        @apply .bg-white .mx-auto .rounded .shadow-lg .z-50 .overflow-y-auto;
+
+        .modal-close-top {
+            @apply .absolute .top-0 .right-0 .cursor-pointer .flex .flex-col .items-center .mt-4 .mr-4 .text-white .text-sm .z-50
+        }
+
+        .modal-content {
+            @apply  .py-4 .text-left .px-6
+        }
+    }
+}

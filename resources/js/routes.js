@@ -1,8 +1,7 @@
-import App from './components/App';
-import Dashboard from './components/Dashboard';
-import CreateUser from './components/CreateUser';
-import CreateCook from './components/CreateCook';
-import About from './components/About';
+import Dashboard from './view/pages/Dashboard';
+import CreateUser from './view/pages/CreateUser';
+import CreateCook from './view/pages/CreateCook';
+import About from './view/pages/About';
 
 export default {
     mode: 'history',

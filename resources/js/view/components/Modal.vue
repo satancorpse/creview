@@ -78,16 +78,6 @@ import { mapGetters } from 'vuex';
 
 export default {
 
-    data() {
-        return {
-            form: {}
-        }
-    },
-
-    mounted() {
-        // console.log(this.$store.state)
-    },
-
     computed: {
         ...mapGetters({
             cook: 'cookUnderEdit',

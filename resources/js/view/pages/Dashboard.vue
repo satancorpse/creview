@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import modal from './Modal';
+import modal from '../components/Modal';
 import { mapGetters } from 'vuex';
 
 export default {

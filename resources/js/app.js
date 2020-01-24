@@ -5,7 +5,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
 import store from './store';
-import App from './components/App';
+import App from './view/App';
 
 Vue.use(VueRouter);
 

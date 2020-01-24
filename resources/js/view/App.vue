@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import TopNav from './TopNav';
-import SideNav from './SideNav';
+import TopNav from './components/TopNav';
+import SideNav from './components/SideNav';
 
 export default {
 

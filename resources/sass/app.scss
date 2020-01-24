@@ -89,9 +89,17 @@ pre {text-align:left; font-size:100%;}
 hr {height:0; margin:1em 0 1em;}
 
 label { @apply .block .uppercase .tracking-wide .text-gray-700 .text-xs .font-bold .mb-2 }
-input {
+input[type=text], input[type=email], input[type=password] {
     @apply .appearance-none .block .w-full .bg-gray-200 .text-gray-700 .border .border-gray-200 .rounded .py-3 .px-4 .mb-3 .leading-tight;
     &:focus { @apply .outline-none .bg-white .border-gray-500 }
+}
+select {
+    @apply block .appearance-none .w-full .bg-gray-200 .border .border-gray-200
+    .text-gray-700 .py-3 .px-4 .pr-8 .rounded .leading-tight;
+
+    &:focus {
+        @apply .outline-none .bg-white .border-gray-500
+    }
 }
 
 //ui elements

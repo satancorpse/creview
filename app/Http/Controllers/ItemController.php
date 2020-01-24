@@ -18,12 +18,13 @@ class ItemController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:350',
-            'cook_id' => 'required|exists:cooks,id'
+            'cook_id' => 'required|exists:cooks,id',
+            'publish' => 'required'
         ]);
 
-        Item::create($validatedData);
+        $item = Item::create($validatedData)->load('cook');
 
-        return response()->json('Item created!', 200);
+        return response()->json($item, 200);
     }
 
     public function update(Request $request, Item $item) {

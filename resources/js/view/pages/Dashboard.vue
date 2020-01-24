@@ -1,22 +1,32 @@
 <template>
     <div>
         <div class="box min-h-16 mb-8 w-full">
-            <UsersList></UsersList>
+            <Reviews></Reviews>
+        </div>
+
+        <div class="box min-h-16 mb-8 w-full">
+            <Items></Items>
+        </div>
+
+        <div class="box min-h-16 mb-8 w-full">
+            <Users></Users>
         </div>
 
         <div class="box mb-8">
-            <CooksList></CooksList>
+            <Cooks></Cooks>
         </div>
 
     </div>
 </template>
 
 <script>
-import UsersList from './UsersList';
-import CooksList from './CooksList';
+import Users from './Users';
+import Cooks from './Cooks';
+import Reviews from './Reviews';
+import Items from './Items';
 
 export default {
-    components: { UsersList, CooksList },
+    components: { Users, Cooks, Reviews, Items },
 }
 </script>
 

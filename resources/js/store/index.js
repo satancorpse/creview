@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import users from './modules/users';
 import cooks from './modules/cooks';
-import modal from './modules/modal';
+import items from './modules/items';
+import reviews from './modules/reviews';
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export default new Vuex.Store({
   modules: {
     users,
     cooks,
-    modal
+    items,
+    reviews
   },
   strict: debug,
 })

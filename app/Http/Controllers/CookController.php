@@ -9,7 +9,7 @@ class CookController extends Controller
 {
     public function index() {
 
-        $cooks = Cook::latest()->get()->take(55);
+        $cooks = Cook::latest()->get()->take(5);
 
         return response()->json($cooks, 200);
     }
@@ -24,7 +24,7 @@ class CookController extends Controller
 
         $cook = Cook::create($validatedData);
 
-        return response()->json('New cook\'s been created!', 200);
+        return response()->json($cook, 200);
     }
 
     public function update(Request $request, Cook $cook) {

@@ -17,6 +17,7 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->unsignedBigInteger('cook_id');
+            $table->boolean('publish')->default(0);
             $table->timestamps();
             $table->foreign('cook_id')->references('id')->on('cooks')->onDelete('cascade');
         });

@@ -14,11 +14,6 @@
         <h6>
             <router-link to="/create-item" class="text-teal-600 font-bold"><span class="text-teal-500">+</span> Add new item</router-link>
         </h6>
-        <hr>
-        <h3 class="mb-2">Manage reviews</h3>
-        <h6>
-            <router-link to="/create-review" class="text-teal-600 font-bold"><span class="text-teal-500">+</span> Add new review</router-link>
-        </h6>
     </div>
 </template>
 

@@ -1,18 +1,20 @@
 <template>
     <div>
-        <table class="table-auto w-full">
+        <table class="table-auto w-full mb-8">
             <thead class="border bg-teal-100">
                 <tr>
-                    <th class="py-2" colspan="3">Recent reviews</th>
+                    <th class="py-2" colspan="3">Available Reviews</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(review, index) in reviews" :key="review.id">
+                <tr v-for="(item, index) in items" :key="item.id">
                     <td class="border p-2 text-center">{{ index+1 }}</td>
-                    <td class="border px-4 py-2">{{ review.item.name }}</td>
+                    <td class="border px-4 py-2">
+                        <p class="mt-0">{{ item.name }}</p>
+                        <span class="text-xs">Offered by <a href="#" class="text-teal-600 font-bold">{{ item.cook.name }}</a></span>
+                    </td>
                     <td class="border p-1 text-center w-2/5">
-                        <button class="btn-edit">Edit</button>
-                        <button class="btn-remove">Remove</button>
+                        <button class="btn-edit" @click.prevent="redirectSubmit(item)">Submit Feedback</button>
                     </td>
                 </tr>
             </tbody>
@@ -25,15 +27,25 @@ import { mapGetters } from 'vuex';
 
 export default {
 
-    created() {
-        this.$store.dispatch('fetchReviews')
-    },
-
     computed: {
         ...mapGetters({
-            reviews: 'reviews'
+            items: 'items'
         }),
     },
+
+    methods: {
+        redirectSubmit(item) {
+            this.$router.push({ name: 'submit-review', params: {id: item.id}}).catch(error => {
+                if (error.name != "NavigationDuplicated") {
+                    throw error;
+                }
+            })
+
+            this.$nextTick(function () {
+                console.log(item)
+            });
+        },
+    }
 }
 </script>
 

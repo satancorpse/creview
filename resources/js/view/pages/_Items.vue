@@ -13,7 +13,7 @@
                     <td class="border px-4 py-2">{{ item.cook.name }}</td>
                     <td class="border p-1 text-center w-2/5">
                         <button class="btn-edit" @click.prevent="showModal(item)">Edit</button>
-                        <button class="btn-remove" @click.prevent="confirmRemove(item)">Remove</button>
+                        <button class="btn-remove">Remove</button>
                     </td>
                 </tr>
             </tbody>
@@ -21,16 +21,6 @@
 
         <Modal @closeModal="closeModal" v-if="this.show">
             <EditItem @updated="closeModal"></EditItem>
-        </Modal>
-
-        <Modal v-if="this.confirm" @closeModal="closeModal" >
-            <div>
-                <h3>Are you sure?</h3>
-                <h6>This will remove <span class="text-teal-600">{{ selectedItem.name }}</span> as well as all associated reviews from the database</h6>
-                <hr>
-                <button class="btn-primary" @click="removeItem(selectedItem)">Yes</button>
-                <button class="btn-warning" @click="declineConfirm">No</button>
-            </div>
         </Modal>
     </div>
 </template>
@@ -47,7 +37,6 @@ export default {
     data() {
         return {
             show: false,
-            confirm: false
         }
     },
 
@@ -57,8 +46,7 @@ export default {
 
     computed: {
         ...mapGetters({
-            items: 'items',
-            selectedItem: 'selectedItem'
+            items: 'items'
         }),
     },
 
@@ -70,23 +58,7 @@ export default {
 
         closeModal() {
             this.show = false
-            this.confirm = false
         },
-
-        confirmRemove(item) {
-            this.confirm = true
-            this.$store.commit('itemSelected', item)
-        },
-
-        declineConfirm() {
-            this.confirm = false
-        },
-
-        removeItem(item) {
-            this.$store.dispatch('removeItem', item).then(res => {
-                this.confirm = false
-            })
-        }
     }
 }
 </script>

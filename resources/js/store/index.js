@@ -14,7 +14,7 @@ export default new Vuex.Store({
     users,
     cooks,
     items,
-    reviews
+    reviews,
   },
   strict: debug,
 })

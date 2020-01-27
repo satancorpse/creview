@@ -79,7 +79,7 @@ export default {
             name: '',
             email: '',
             password: '',
-            password_confirmation: ''
+            password_confirmation: '',
         }
     },
 
@@ -93,7 +93,7 @@ export default {
             }).then(res => {
                 this.$router.push('/dashboard')
             })
-        }
+        },
     }
 };
 </script>

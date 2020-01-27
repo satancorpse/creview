@@ -1,9 +1,10 @@
 <template>
     <header class="border-b">
         <nav class="flex items-center justify-between flex-wrap py-4 container w-2/3 mx-auto">
-            <div class="flex items-center flex-shrink-0 text-white mr-6">
+            <div class="flex items-center flex-shrink-0 text-white mr-24">
                 <router-link to="/">
-                    <img src="https://cookups.com.bd/img/logo.png" style="height: 30px" alt="Cookups">
+                    <!-- <img src="https://cookups.com.bd/img/logo.png" style="height: 30px" alt="Cookups"> -->
+                    <h3 class="text-teal-700">iCode</h3>
                 </router-link>
             </div>
             <div class="block lg:hidden">

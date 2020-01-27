@@ -33,6 +33,7 @@ const actions = {
     },
 
     updateItem: (context, item) => {
+        console.log(item)
         return new Promise((resolve, reject) => {
             axios.patch('/api/items/' + item.id, {
                 name: item.name,
@@ -47,18 +48,6 @@ const actions = {
             })
         })
     },
-
-    removeItem: (context, item) => {
-        return new Promise((resolve, reject) => {
-            axios.delete('/api/items/' + item.id).then(res => {
-                context.commit('itemRemoved', item.id)
-                resolve(res)
-            }).catch(err => {
-                console.log(err)
-                reject(err)
-            })
-        })
-    }
 }
 
 const mutations = {
@@ -86,6 +75,7 @@ const mutations = {
     },
 
     updateCook: (state, cook) => {
+        console.log(cook)
         state.selectedItem.cook_id = cook
     },
 
@@ -104,12 +94,6 @@ const mutations = {
             cook: { name: item.cook.name}
         })
     },
-
-    itemRemoved: (state, item) => {
-        const index = state.items.findIndex(i => i.id == item.id) + 1
-
-        state.items.splice(index, 1)
-    }
 
 };
 

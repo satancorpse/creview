@@ -19,7 +19,7 @@ class ItemController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:350',
             'cook_id' => 'required|exists:cooks,id',
-            'publish' => 'required'
+            'publish' => 'required|boolean'
         ]);
 
         $item = Item::create($validatedData)->load('cook');
@@ -31,12 +31,13 @@ class ItemController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:350',
+            'publish' => 'required|boolean',
             'cook_id' => 'required|exists:cooks,id'
         ]);
 
         $item->update($validatedData);
 
-        return response()->json('Item\'s been updated successfully!', 201);
+        return response()->json($item->load('cook'), 201);
     }
 
     public function destroy(Item $item) {

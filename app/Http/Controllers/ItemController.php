@@ -14,6 +14,12 @@ class ItemController extends Controller
         return response()->json($items, 200);
     }
 
+    public function show($id) {
+        $item = Item::findOrFail($id);
+
+        return response()->json($item, 200);
+    }
+
     public function store(Request $request) {
 
         $validatedData = $request->validate([

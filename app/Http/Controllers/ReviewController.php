@@ -18,6 +18,7 @@ class ReviewController extends Controller
 
         $validatedData = $request->validate([
             'score' => 'required|between:1,5|numeric',
+            'meta' => 'required|json|max:5500',
             'feedback' => 'required|string|max:1000',
             'user_id' => 'required|exists:users,id',
             'item_id' => 'required|exists:items,id'
@@ -32,6 +33,7 @@ class ReviewController extends Controller
 
         $validatedData = $request->validate([
             'score' => 'required|between:1,5|numeric',
+            'meta' => 'required|string|max:500',
             'feedback' => 'required|string|max:1000',
             'user_id' => 'required|exists:users,id',
             'item_id' => 'required|exists:items,id'

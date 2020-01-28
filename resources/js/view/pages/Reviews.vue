@@ -10,7 +10,7 @@
                 <tr v-for="(item, index) in items" :key="item.id">
                     <td class="border p-2 text-center">{{ index+1 }}</td>
                     <td class="border px-4 py-2">
-                        <p class="mt-0">{{ item.name }}</p>
+                        <p class="mt-0 cursor-pointer" @click="redirectReview(item)">{{ item.name }}</p>
                         <span class="text-xs">Offered by <a href="#" class="text-teal-600 font-bold">{{ item.cook.name }}</a></span>
                     </td>
                     <td class="border p-1 text-center w-2/5">
@@ -36,6 +36,18 @@ export default {
     methods: {
         redirectSubmit(item) {
             this.$router.push({ name: 'submit-review', params: {id: item.id}}).catch(error => {
+                if (error.name != "NavigationDuplicated") {
+                    throw error;
+                }
+            })
+
+            this.$nextTick(function () {
+                this.$store.commit('itemSelected', item)
+            });
+        },
+
+        redirectReview(item) {
+            this.$router.push({ name: 'item-reviews', params: {id: item.id}}).catch(error => {
                 if (error.name != "NavigationDuplicated") {
                     throw error;
                 }

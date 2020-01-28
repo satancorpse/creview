@@ -2,7 +2,6 @@
     <div>
         <h1>Submit</h1>
         <hr>
-
         <form class="w-full max-w-lg">
 
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -11,7 +10,7 @@
                         How much would you rate the item?
                     </label>
                     <div class="relative">
-                        <select class="" id="id" v-model="id">
+                        <select class="" id="score" v-model="formData.score">
                             <option disabled value="">Give a score</option>
                             <option v-for="(score, index) in scores" :key="score" :value="score">{{ score }}</option>
                         </select>
@@ -27,20 +26,26 @@
                 <div class="mt-2">
                     <div>
                         <label class="inline-flex items-center">
-                            <input type="checkbox" class="form-checkbox">
+                            <input type="checkbox" class="form-checkbox" v-model="formData.meta.type" value="Taste">
                             <span class="ml-2">Taste</span>
                         </label>
                     </div>
                     <div>
                         <label class="inline-flex items-center">
-                            <input type="checkbox" class="form-checkbox">
+                            <input type="checkbox" class="form-checkbox" v-model="formData.meta.type" value="Authantacity">
                             <span class="ml-2">Authantacity</span>
                         </label>
                     </div>
                     <div>
                         <label class="inline-flex items-center">
-                            <input type="checkbox" class="form-checkbox">
+                            <input type="checkbox" class="form-checkbox" v-model="formData.meta.type" value="Quality">
                             <span class="ml-2">Quality</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="inline-flex items-center w-full">
+                            <span class="mr-2">Other: </span>
+                            <input type="text" class="form-text mb-0" placeholder="Please specify" style="margin-bottom: 0 !important" v-model="formData.meta.other">
                         </label>
                     </div>
                 </div>
@@ -50,26 +55,35 @@
                 <div class="w-full px-3">
                     <label class="block">
                         <span class="text-gray-700">Give a constructive feedback</span>
-                        <textarea class="form-textarea mt-1 block w-full" rows="12" placeholder="Enter some long form content."></textarea>
+                        <textarea class="form-textarea mt-1 block w-full" rows="6" placeholder="Enter some long form content." v-model="formData.feedback"></textarea>
                     </label>
                 </div>
             </div>
 
-            <button type="submit" class="btn-primary">Submit</button>
+            <button type="submit" class="btn-primary" @click.prevent="submitReview">Submit</button>
         </form>
 
+        {{ formData }}
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 
 export default {
 
     data() {
         return {
             scores: [1,2,3,4,5],
-            id: ''
+            formData: {
+                score: '',
+                meta: {
+                    type: [],
+                    other: ''
+                },
+                feedback: '',
+                user_id: 1,
+                item_id: this.$route.params.id
+            }
         }
     },
 
@@ -78,7 +92,13 @@ export default {
     },
 
     methods: {
-
+        submitReview() {
+            this.$store.dispatch('submitReview', {
+                review: this.formData
+            }).then(res => {
+                this.$router.push({name: 'item-reviews', params: { id: this.formData.item_id }})
+            })
+        }
     }
 }
 </script>

@@ -22450,8 +22450,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var _view_App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./view/App */ "./resources/js/view/App.vue");
 
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + _store__WEBPACK_IMPORTED_MODULE_4__["default"].state.auth.access_token;
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + _store__WEBPACK_IMPORTED_MODULE_4__["default"].state.auth.access_token; // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 
 
 

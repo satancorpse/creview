@@ -41,16 +41,10 @@ const mutations = {
     ItemReviewsFetched: (state, reviews) => {
         state.itemReviews = reviews
     },
-    // reviewSubmitted: (state, review) => {
-    //     state.reviews.push({
-    //         score: review.score,
-    //         meta: JSON.parse(review.meta),
-    //         feedback: review.feedback,
-    //         user_id: 1,
-    //         item_id: review.item_id,
 
-    //     })
-    // },
+    reviewSubmitted: (state, review) => {
+        state.reviews.push(review)
+    }
 };
 
 const getters = {

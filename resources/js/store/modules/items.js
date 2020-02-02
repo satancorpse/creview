@@ -7,6 +7,7 @@ const state = {
 
 const actions = {
     fetchItems: context => {
+
         axios.get("/api/items").then(response => {
             context.commit("itemsFetched", response.data);
         }).catch(error => {

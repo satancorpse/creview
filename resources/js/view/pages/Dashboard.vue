@@ -9,11 +9,11 @@
         </div>
 
         <div class="box min-h-16 mb-8 w-full">
-            <Users></Users>
+            <Users v-if="this.$store.getters.admin || this.$store.getters.god"></Users>
         </div>
 
         <div class="box mb-8">
-            <Cooks></Cooks>
+            <Cooks v-if="this.$store.getters.admin || this.$store.getters.god"></Cooks>
         </div>
 
     </div>

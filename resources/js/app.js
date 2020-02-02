@@ -1,5 +1,5 @@
 import axios from 'axios';
-// axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.token;
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.token;
 // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import Vue from "vue";

@@ -13,7 +13,8 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('/cooks/{cook}', 'CookController@update')->middleware('scope:do_anything,can_update');
     Route::delete('/cooks/{cook}', 'CookController@destroy')->middleware('scope:do_anything,can_update');
 
-    Route::get('/items', 'ItemController@index')->middleware('scope:do_anything,can_update');
+    Route::get('/items', 'ItemController@index');
+    Route::get('/closed-reviews/{id}', 'ItemController@closed');
     Route::get('/items/{id}/reviews', 'ItemController@show')->middleware('scope:do_anything,can_update');
     Route::post('/items/create', 'ItemController@store')->middleware('scope:do_anything,can_update');
     Route::patch('/items/{item}', 'ItemController@update')->middleware('scope:do_anything,can_update');

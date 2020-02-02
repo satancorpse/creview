@@ -13,6 +13,7 @@ const actions = {
         }).catch(error => {
             // eslint-disable-next-line
             console.error(error);
+            context.dispatch('logout')
         });
     },
 

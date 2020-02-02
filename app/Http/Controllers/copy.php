@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+// namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 
-use GuzzleHttp;
+// use GuzzleHttp;
 
-use Illuminate\Support\Facades\Hash;
+// use Illuminate\Support\Facades\Hash;
 
-use App\User;
-use Illuminate\Support\Facades\Auth;
+// use App\User;
+// use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+// class AuthController extends Controller
 {
 
     public function getUsers() {

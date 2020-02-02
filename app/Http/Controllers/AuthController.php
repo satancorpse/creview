@@ -33,7 +33,7 @@ class AuthController extends Controller
         ]);
 
         if( !Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response()->json('Unauthorized');
+            return response()->json('Unauthorized', 403);
         }
 
         $user = $request->user();

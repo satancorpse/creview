@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const state = {
-    auth_user: JSON.parse(localStorage.getItem('auth_user')) || null
+    auth_user: JSON.parse(localStorage.getItem('auth_user')) || null,
+    access_token: localStorage.getItem('cr_key') || null
 };
 
 const actions = {
@@ -14,7 +15,9 @@ const actions = {
                 })
                 .then(response => {
                     localStorage.setItem("auth_user", JSON.stringify(response.data));
+                    localStorage.setItem("cr_key", response.data.access_token);
                     context.commit("set_auth_user", response.data);
+                    context.commit("set_token", response.data.access_token);
 
                     resolve(response);
                 })
@@ -23,42 +26,18 @@ const actions = {
                 });
         });
     },
-
-    // authUser: (context) => {
-    //     console.log(context.getters.superAdmin)
-    //     axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.cr_token
-
-    //     if(!context.getters.signedIn) {
-    //         return null;
-    //     }
-
-    //     return new Promise((resolve, reject) => {
-    //         axios
-    //             .get("/api/auth-user")
-    //             .then(response => {
-    //                 context.commit("set_auth_user", response.data);
-
-    //                 resolve(response)
-    //             })
-    //             .catch(error => {
-    //                 reject(error);
-    //             });
-    //     });
-    // }
 };
 
 const mutations = {
-    // setToken: (state, token) => {
-    //     state.cr_token = token
-    // },
-
     set_auth_user: (state, auth_user) => {
         state.auth_user = auth_user
+    },
+    set_token: (state, token) => {
+        state.access_token = token
     }
 };
 
 const getters = {
-    token: state => state.auth_user.access_token,
     signedIn: state => state.auth_user !== null,
     god: state => state.auth_user.user.role === 1,
     admin: state => state.auth_user.user.role === 2

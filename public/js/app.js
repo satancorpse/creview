@@ -22450,7 +22450,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var _view_App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./view/App */ "./resources/js/view/App.vue");
 
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + _store__WEBPACK_IMPORTED_MODULE_4__["default"].getters.token;
+axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + _store__WEBPACK_IMPORTED_MODULE_4__["default"].state.auth.access_token;
 axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
@@ -22646,7 +22646,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var state = {
-  auth_user: JSON.parse(localStorage.getItem('auth_user')) || null
+  auth_user: JSON.parse(localStorage.getItem('auth_user')) || null,
+  access_token: localStorage.getItem('cr_key') || null
 };
 var actions = {
   requestLogin: function requestLogin(context, user) {
@@ -22656,44 +22657,25 @@ var actions = {
         password: user.password
       }).then(function (response) {
         localStorage.setItem("auth_user", JSON.stringify(response.data));
+        localStorage.setItem("cr_key", response.data.access_token);
         context.commit("set_auth_user", response.data);
+        context.commit("set_token", response.data.access_token);
         resolve(response);
       })["catch"](function (error) {
         reject(error);
       });
     });
-  } // authUser: (context) => {
-  //     console.log(context.getters.superAdmin)
-  //     axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.cr_token
-  //     if(!context.getters.signedIn) {
-  //         return null;
-  //     }
-  //     return new Promise((resolve, reject) => {
-  //         axios
-  //             .get("/api/auth-user")
-  //             .then(response => {
-  //                 context.commit("set_auth_user", response.data);
-  //                 resolve(response)
-  //             })
-  //             .catch(error => {
-  //                 reject(error);
-  //             });
-  //     });
-  // }
-
+  }
 };
 var mutations = {
-  // setToken: (state, token) => {
-  //     state.cr_token = token
-  // },
   set_auth_user: function set_auth_user(state, auth_user) {
     state.auth_user = auth_user;
+  },
+  set_token: function set_token(state, token) {
+    state.access_token = token;
   }
 };
 var getters = {
-  token: function token(state) {
-    return state.auth_user.access_token;
-  },
   signedIn: function signedIn(state) {
     return state.auth_user !== null;
   },

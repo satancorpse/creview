@@ -1,35 +1,26 @@
 <template>
-<div>
-    <TopNav></TopNav>
     <div>
-        <div class="container w-2/3 flex mx-auto">
-            <div class="w-1/4 min-h-screen">
-                <SideNav></SideNav>
-            </div>
-
-            <div class="w-3/4 border-l p-8">
-                <router-view></router-view>
-            </div>
-        </div>
+        <router-view></router-view>
     </div>
-</div>
 </template>
 
 <script>
-import TopNav from './components/TopNav';
-import SideNav from './components/SideNav';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
+    // beforeCreate() {
+    //     this.$store.dispatch('authUser');
+    // },
 
-    components: {
-        TopNav,
-        SideNav,
+    mounted() {
+        // console.log(JSON.parse(localStorage.getItem('auth_user')).user.role)
     },
 
-    data() {
-        return {}
-    },
-
+    computed: {
+        ...mapGetters({
+            signedIn: 'signedIn',
+        })
+    }
 };
 </script>
 

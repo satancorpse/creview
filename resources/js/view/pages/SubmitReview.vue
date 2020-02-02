@@ -62,8 +62,6 @@
 
             <button type="submit" class="btn-primary" @click.prevent="submitReview">Submit</button>
         </form>
-
-        {{ formData }}
     </div>
 </template>
 

@@ -1,20 +1,22 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import users from './modules/users';
-import cooks from './modules/cooks';
-import items from './modules/items';
-import reviews from './modules/reviews';
+import Vue from "vue";
+import Vuex from "vuex";
+import auth from "./modules/auth";
+import users from "./modules/users";
+import cooks from "./modules/cooks";
+import items from "./modules/items";
+import reviews from "./modules/reviews";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-const debug = process.env.NODE_ENV !== 'production'
+const debug = process.env.NODE_ENV !== "production";
 
 export default new Vuex.Store({
-  modules: {
-    users,
-    cooks,
-    items,
-    reviews,
-  },
-  strict: debug,
-})
+    modules: {
+        auth,
+        users,
+        cooks,
+        items,
+        reviews
+    },
+    strict: debug
+});

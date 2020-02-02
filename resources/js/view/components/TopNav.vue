@@ -1,12 +1,6 @@
 <template>
-    <header class="border-b">
-        <nav class="flex items-center justify-between flex-wrap py-4 container w-2/3 mx-auto">
-            <div class="flex items-center flex-shrink-0 text-white mr-24">
-                <router-link to="/">
-                    <!-- <img src="https://cookups.com.bd/img/logo.png" style="height: 30px" alt="Cookups"> -->
-                    <h3 class="text-teal-700">iCode</h3>
-                </router-link>
-            </div>
+    <header class="border-b sticky top-0 bg-white">
+        <nav class="flex items-center justify-between flex-wrap px-16 py-4 mx-left w-3/4">
             <div class="block lg:hidden">
                 <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
                 <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
@@ -16,13 +10,12 @@
                 <div class="text-sm lg:flex-grow">
                     <router-link
                         to="/about"
-                        class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-black font-semibold mr-4">
+                        class="menu-item mr-4">
                         About
                     </router-link>
-
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-black font-semibold mr-4">Docs</a>
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-black font-semibold mr-4">Docs</a>
-                    <a href="#responsive-header" class="block mt-4 lg:inline-block lg:mt-0 text-gray-700 hover:text-black font-semibold mr-4">Docs</a>
+                    <a href="#responsive-header" class="mr-4">Docs</a>
+                    <a href="#responsive-header" class="mr-4">Docs</a>
+                    <a href="#responsive-header" class="mr-4">Docs</a>
                 </div>
                 <div>
                 <a href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Download</a>
@@ -33,6 +26,7 @@
 </template>
 
 <script>
+
 export default {
 
 }

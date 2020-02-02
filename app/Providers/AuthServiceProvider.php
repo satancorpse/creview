@@ -26,6 +26,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Passport::tokensCan([
+            'do_anything' => 'Token for super-admin',
+            'can_update' => 'Token for admin',
+            'can_review' => 'Token for reviewer',
+        ]);
+
         Passport::routes( function($router) {
             $router->forAccessTokens();
         });

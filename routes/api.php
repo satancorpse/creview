@@ -1,22 +1,32 @@
 <?php
 
-Route::get('/users', 'AuthController@getUsers');
+Route::middleware('auth:api')->group(function () {
+    Route::get('/auth-user', 'AuthController@authUser');
+    Route::get('/users', 'AuthController@getUsers')->middleware('scope:do_anything,can_update');
+    Route::post('/users/register', 'AuthController@register')->middleware('scope:do_anything,can_update');
+    Route::post('/logout', 'AuthController@logout');
+    Route::get('/test-sa', 'AuthController@testSA')->middleware('scope:do_anything');
+    Route::get('/test-a', 'AuthController@testA')->middleware('scope:can_update');
+    Route::get('/test-r', 'AuthController@testR')->middleware('scope:can_review');
+    Route::get('/cooks', 'CookController@index');
+    Route::post('/cooks/create', 'CookController@store')->middleware('scope:do_anything,can_update');
+    Route::patch('/cooks/{cook}', 'CookController@update')->middleware('scope:do_anything,can_update');
+    Route::delete('/cooks/{cook}', 'CookController@destroy')->middleware('scope:do_anything,can_update');
+
+    Route::get('/items', 'ItemController@index')->middleware('scope:do_anything,can_update');
+    Route::get('/items/{id}/reviews', 'ItemController@show')->middleware('scope:do_anything,can_update');
+    Route::post('/items/create', 'ItemController@store')->middleware('scope:do_anything,can_update');
+    Route::patch('/items/{item}', 'ItemController@update')->middleware('scope:do_anything,can_update');
+    Route::delete('/items/{item}', 'itemController@destroy')->middleware('scope:do_anything,can_update');
+
+    Route::get('/reviews', 'ReviewController@index');
+    Route::post('/reviews/create', 'ReviewController@store');
+    Route::patch('/reviews/{review}', 'ReviewController@update')->middleware('scope:do_anything,can_update');
+    Route::delete('/reviews/{review}', 'ReviewController@destroy')->middleware('scope:do_anything,can_update');
+});
+
 Route::post('/login', 'AuthController@login');
-Route::post('/users/register', 'AuthController@register');
-Route::middleware('auth:api')->post('/logout', 'AuthController@logout');
 
-Route::get('/cooks', 'CookController@index');
-Route::post('/cooks/create', 'CookController@store');
-Route::patch('/cooks/{cook}', 'CookController@update');
-Route::delete('/cooks/{cook}', 'CookController@destroy');
 
-Route::get('/items', 'ItemController@index');
-Route::get('/items/{id}/reviews', 'ItemController@show');
-Route::post('/items/create', 'ItemController@store');
-Route::patch('/items/{item}', 'ItemController@update');
-Route::delete('/items/{item}', 'itemController@destroy');
 
-Route::get('/reviews', 'ReviewController@index');
-Route::post('/reviews/create', 'ReviewController@store');
-Route::patch('/reviews/{review}', 'ReviewController@update');
-Route::delete('/reviews/{review}', 'ReviewController@destroy');
+

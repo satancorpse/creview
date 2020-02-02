@@ -10,7 +10,8 @@ class ItemController extends Controller
 {
     public function index() {
 
-        $items = Item::all();
+        $items = Item::latest()->get()->take(5);
+
         return response()->json($items, 200);
     }
 

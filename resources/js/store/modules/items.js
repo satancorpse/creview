@@ -10,7 +10,6 @@ const actions = {
         axios.get("/api/items").then(response => {
             context.commit("itemsFetched", response.data);
         }).catch(error => {
-            // eslint-disable-next-line
             console.error(error);
         });
     },

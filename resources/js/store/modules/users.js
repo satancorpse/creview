@@ -7,6 +7,8 @@ const state = {
 const actions = {
 
     fetchUsers: context => {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.getters.token;
+
         axios.get('/api/users').then(response => {
                 context.commit('usersFetched', response.data);
             }).catch(error => {
@@ -15,6 +17,7 @@ const actions = {
     },
 
     createUser: (context, data) => {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.getters.token;
 
         return new Promise((resolve, reject) => {
             axios.post('/api/users/register', {

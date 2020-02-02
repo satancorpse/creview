@@ -6,6 +6,7 @@ const state = {
 };
 
 const actions = {
+
     fetchCooks: context => {
         axios.get("/api/cooks").then(response => {
             context.commit("cooksFetched", response.data);
@@ -16,7 +17,6 @@ const actions = {
     },
 
     createCook: (context, data) => {
-
         return new Promise((resolve, reject) => {
             axios.post('/api/cooks/create', {
                 name: data.name,

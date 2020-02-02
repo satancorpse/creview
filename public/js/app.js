@@ -22449,8 +22449,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var _view_App__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./view/App */ "./resources/js/view/App.vue");
-
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + _store__WEBPACK_IMPORTED_MODULE_4__["default"].state.auth.access_token; // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+ // axios.defaults.headers.common['Authorization'] = 'Bearer ' + store.getters.token;
+// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 
@@ -22660,6 +22660,7 @@ var actions = {
         localStorage.setItem("cr_key", response.data.access_token);
         context.commit("set_auth_user", response.data);
         context.commit("set_token", response.data.access_token);
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
         resolve(response);
       })["catch"](function (error) {
         reject(error);
@@ -22684,6 +22685,9 @@ var getters = {
   },
   admin: function admin(state) {
     return state.auth_user.user.role === 2;
+  },
+  token: function token(state) {
+    return state.access_token;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -22853,7 +22857,6 @@ var actions = {
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/items").then(function (response) {
       context.commit("itemsFetched", response.data);
     })["catch"](function (error) {
-      // eslint-disable-next-line
       console.error(error);
     });
   },
@@ -23051,6 +23054,7 @@ var state = {
 };
 var actions = {
   fetchUsers: function fetchUsers(context) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.getters.token;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/users').then(function (response) {
       context.commit('usersFetched', response.data);
     })["catch"](function (error) {
@@ -23058,6 +23062,7 @@ var actions = {
     });
   },
   createUser: function createUser(context, data) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.getters.token;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/users/register', {
         name: data.name,

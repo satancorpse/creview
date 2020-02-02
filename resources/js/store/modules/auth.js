@@ -19,6 +19,9 @@ const actions = {
                     context.commit("set_auth_user", response.data);
                     context.commit("set_token", response.data.access_token);
 
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+
+
                     resolve(response);
                 })
                 .catch(error => {
@@ -40,7 +43,8 @@ const mutations = {
 const getters = {
     signedIn: state => state.auth_user !== null,
     god: state => state.auth_user.user.role === 1,
-    admin: state => state.auth_user.user.role === 2
+    admin: state => state.auth_user.user.role === 2,
+    token: state => state.access_token
 };
 
 export default {

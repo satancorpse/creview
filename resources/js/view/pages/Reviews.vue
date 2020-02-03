@@ -3,11 +3,11 @@
         <table class="table-auto w-full mb-8">
             <thead class="border bg-teal-100">
                 <tr>
-                    <th class="py-2" colspan="3">Available Reviews</th>
+                    <th class="py-2" colspan="3">Available reviews</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item, index) in items" :key="item.id">
+                <tr v-for="(item, index) in published_items" :key="item.id">
                     <td class="border p-2 text-center">{{ index+1 }}</td>
                     <td class="border px-4 py-2">
                         <p class="mt-0 cursor-pointer" @click="redirectReview(item)">{{ item.name }}</p>
@@ -15,6 +15,22 @@
                     </td>
                     <td class="border p-1 text-center w-2/5">
                         <button class="btn-edit" @click.prevent="redirectSubmit(item)">Submit Feedback</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table-auto w-full mb-8">
+            <thead class="border bg-teal-100">
+                <tr>
+                    <th class="py-2" colspan="2">Recently closed reviews</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in closed_items" :key="item.id">
+                    <td class="border p-2 text-center">{{ index+1 }}</td>
+                    <td class="border px-4 py-2">
+                        <p class="mt-0 cursor-pointer" @click="redirectReview(item)">{{ item.name }} - <span class="text-xs"><a href="#" class="text-teal-600 font-bold"><i class="fa fa-user text-gray-600"></i> {{ item.cook.name }}</a></span></p>
                     </td>
                 </tr>
             </tbody>
@@ -29,7 +45,8 @@ export default {
 
     computed: {
         ...mapGetters({
-            items: 'items'
+            published_items: 'published_items',
+            closed_items: 'closed_items',
         }),
     },
 

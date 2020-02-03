@@ -2417,8 +2417,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       name: '',
-      cook_id: '',
-      publish: false
+      cook_id: ''
     };
   },
   created: function created() {
@@ -2433,8 +2432,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$store.dispatch('createItem', {
         name: this.name,
-        cook_id: this.cook_id,
-        publish: this.publish
+        cook_id: this.cook_id
       }).then(function (res) {
         _this.$router.push('/dashboard');
       });
@@ -2831,6 +2829,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -3158,10 +3166,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    items: 'items'
+    published_items: 'published_items',
+    closed_items: 'closed_items'
   })),
   methods: {
     redirectSubmit: function redirectSubmit(item) {
@@ -4641,7 +4666,7 @@ var render = function() {
       _c("div", { staticClass: "flex flex-wrap -mx-3 mb-2" }, [
         _c("div", { staticClass: "w-full px-3" }, [
           _c("label", { attrs: { for: "cook" } }, [
-            _vm._v("\n                    Cook\n                ")
+            _vm._v("\n                        Cook\n                    ")
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "relative" }, [
@@ -4716,58 +4741,7 @@ var render = function() {
                 )
               ]
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "md:w-2/3 block text-gray-500 font-bold mt-4" },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.publish,
-                    expression: "publish"
-                  }
-                ],
-                staticClass: "mr-2 leading-tight",
-                attrs: { type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.publish)
-                    ? _vm._i(_vm.publish, null) > -1
-                    : _vm.publish
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.publish,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.publish = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.publish = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.publish = $$c
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "text-sm" }, [
-                _vm._v(
-                  "\n                        Publish for review\n                    "
-                )
-              ])
-            ]
-          )
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -5386,7 +5360,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h3", { staticClass: "mt-0" }, [
+      _c("h3", { staticClass: "mt-0 mb-2" }, [
         _vm._v("Item: "),
         _c("span", { staticClass: "text-teal-600" }, [
           _vm._v(_vm._s(_vm.itemReviews.name))
@@ -5401,6 +5375,41 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("hr"),
+      _vm._v(" "),
+      _c("h4", { staticClass: " mb-2" }, [_vm._v("Summary:")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "review_summary bg-gray-100 p-8 mb-8 border" }, [
+        _c("h6", [
+          _vm._v("Total reviews: "),
+          _c("span", { staticClass: "text-teal-600" }, [
+            _vm._v(_vm._s(_vm.itemReviews.meta_data.score_count))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("h6", [
+          _vm._v("Overall score: "),
+          _c("span", { staticClass: "text-teal-600" }, [
+            _vm._v(_vm._s(_vm.itemReviews.meta_data.score_avg))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("h6", [
+          _c("span", { staticClass: "text-teal-600" }, [
+            _vm._v(
+              _vm._s(_vm.itemReviews.meta_data.top_issue.count) +
+                " person complaint about the "
+            ),
+            _c("span", { staticClass: "text-red-600 italic" }, [
+              _vm._v(_vm._s(_vm.itemReviews.meta_data.top_issue.type))
+            ]),
+            _vm._v(" of the item.")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("h4", { staticClass: "mt-8 mb-2" }, [_vm._v("Reviews:")]),
       _vm._v(" "),
       _vm._l(_vm.itemReviews.reviews, function(review, index) {
         return _c(
@@ -5863,7 +5872,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.items, function(item, index) {
+        _vm._l(_vm.published_items, function(item, index) {
           return _c("tr", { key: item.id }, [
             _c("td", { staticClass: "border p-2 text-center" }, [
               _vm._v(_vm._s(index + 1))
@@ -5915,6 +5924,52 @@ var render = function() {
         }),
         0
       )
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table-auto w-full mb-8" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.closed_items, function(item, index) {
+          return _c("tr", { key: item.id }, [
+            _c("td", { staticClass: "border p-2 text-center" }, [
+              _vm._v(_vm._s(index + 1))
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "border px-4 py-2" }, [
+              _c(
+                "p",
+                {
+                  staticClass: "mt-0 cursor-pointer",
+                  on: {
+                    click: function($event) {
+                      return _vm.redirectReview(item)
+                    }
+                  }
+                },
+                [
+                  _vm._v(_vm._s(item.name) + " - "),
+                  _c("span", { staticClass: "text-xs" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-teal-600 font-bold",
+                        attrs: { href: "#" }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-user text-gray-600" }),
+                        _vm._v(" " + _vm._s(item.cook.name))
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        }),
+        0
+      )
     ])
   ])
 }
@@ -5926,7 +5981,19 @@ var staticRenderFns = [
     return _c("thead", { staticClass: "border bg-teal-100" }, [
       _c("tr", [
         _c("th", { staticClass: "py-2", attrs: { colspan: "3" } }, [
-          _vm._v("Available Reviews")
+          _vm._v("Available reviews")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "border bg-teal-100" }, [
+      _c("tr", [
+        _c("th", { staticClass: "py-2", attrs: { colspan: "2" } }, [
+          _vm._v("Recently closed reviews")
         ])
       ])
     ])
@@ -22950,8 +23017,7 @@ var actions = {
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/items/create', {
         name: data.name,
-        cook_id: data.cook_id,
-        publish: data.publish
+        cook_id: data.cook_id
       }).then(function (res) {
         console.log(res.data);
         context.commit('itemCreated', res.data);
@@ -22997,7 +23063,6 @@ var mutations = {
     state.items.push({
       name: item.name,
       cook_id: item.cook_id,
-      publish: item.publish,
       cook: {
         name: item.cook.name
       }
@@ -23039,6 +23104,16 @@ var mutations = {
 var getters = {
   items: function items(state) {
     return state.items;
+  },
+  published_items: function published_items(state) {
+    return state.items.filter(function (item) {
+      return item.publish;
+    });
+  },
+  closed_items: function closed_items(state) {
+    return state.items.filter(function (item) {
+      return !item.publish;
+    });
   },
   selectedItem: function selectedItem(state) {
     return state.selectedItem;

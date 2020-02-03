@@ -23,13 +23,13 @@
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                         </div>
                     </div>
-
+<!--
                     <label class="md:w-2/3 block text-gray-500 font-bold mt-4">
                         <input class="mr-2 leading-tight" type="checkbox" v-model="publish">
                         <span class="text-sm">
                             Publish for review
                         </span>
-                    </label>
+                    </label> -->
                 </div>
             </div>
 
@@ -47,7 +47,6 @@ export default {
         return {
             name: '',
             cook_id: '',
-            publish: false
         }
     },
 
@@ -67,7 +66,6 @@ export default {
             this.$store.dispatch('createItem', {
                 name: this.name,
                 cook_id: this.cook_id,
-                publish: this.publish
             }).then(res => {
                 this.$router.push('/dashboard')
             })

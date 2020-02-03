@@ -9,9 +9,9 @@ $factory->define(Review::class, function (Faker $faker) {
     $meta = ['Taste', 'Quality', 'Presentation', 'Other'];
     return [
         'score' => random_int(1,5),
-        'meta' => implode(array_rand($meta, 3)),
+        'meta' => json_encode(implode(array_rand($meta, 3))),
         'feedback' => $faker->realText(50),
-        'user_id' => random_int(1,15),
-        'item_id' => random_int(1,10),
+        'user_id' => factory(App\User::class),
+        'item_id' => factory(App\Item::class),
     ];
 });

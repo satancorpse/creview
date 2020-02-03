@@ -5,9 +5,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/users', 'AuthController@getUsers')->middleware('scope:do_anything,can_update');
     Route::post('/users/register', 'AuthController@register')->middleware('scope:do_anything,can_update');
     Route::post('/logout', 'AuthController@logout');
-    Route::get('/test-sa', 'AuthController@testSA')->middleware('scope:do_anything');
-    Route::get('/test-a', 'AuthController@testA')->middleware('scope:can_update');
-    Route::get('/test-r', 'AuthController@testR')->middleware('scope:can_review');
     Route::get('/cooks', 'CookController@index');
     Route::post('/cooks/create', 'CookController@store')->middleware('scope:do_anything,can_update');
     Route::patch('/cooks/{cook}', 'CookController@update')->middleware('scope:do_anything,can_update');
@@ -27,7 +24,3 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::post('/login', 'AuthController@login');
-
-
-
-

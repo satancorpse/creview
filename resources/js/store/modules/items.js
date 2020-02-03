@@ -20,7 +20,6 @@ const actions = {
             axios.post('/api/items/create', {
                 name: data.name,
                 cook_id: data.cook_id,
-                publish: data.publish
             }).then(res => {
                 console.log(res.data)
                 context.commit('itemCreated', res.data)
@@ -70,7 +69,6 @@ const mutations = {
         state.items.push({
             name: item.name,
             cook_id: item.cook_id,
-            publish: item.publish,
             cook: {
                 name: item.cook.name
             }
@@ -115,6 +113,8 @@ const mutations = {
 
 const getters = {
     items: state => state.items,
+    published_items: state => state.items.filter(item => item.publish),
+    closed_items: state => state.items.filter(item => !item.publish),
     selectedItem: state => state.selectedItem
 };
 

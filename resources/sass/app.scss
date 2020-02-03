@@ -4,14 +4,13 @@
 
 @import "tailwindcss/utilities";
 
-@import "https://fonts.googleapis.com/css?family=Nunito:200,600";
+@import "https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&display=swap";
 
 @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
 
-//custom style
 body {
     color:#4d4640;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-weight: normal;
     font-size: 16px;
     line-height: 1.6;
@@ -21,9 +20,8 @@ body {
 
 h1,h2,h3,h4,h5,h6 {
     font-style: normal;
-    font-weight: bold;
     letter-spacing: 0.1em;
-    margin: 0 0 1.35em 0;
+    margin: 0 0 1em 0;
 }
 
 h1 {
@@ -40,7 +38,6 @@ h3 {
 
 h4 {
     font-size: 115%;
-    margin: 0 0 1.15em 0;
 }
 
 h5 {
@@ -50,7 +47,6 @@ h5 {
 }
 
 h6 {
-    font-weight: bold;
     font-size: 80%;
     margin: 0 0 0.8em 0;
     text-transform: uppercase;
@@ -66,9 +62,89 @@ a {
     @apply .text-green-600
 }
 
+//custom style
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    right: 0;
+    height: 3.6rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eaecef;
+    padding: .7rem 1.5rem;
+    line-height: 2.2rem;
+
+    .sidebar-button {
+        display: none;
+        width: 1.25rem;
+        height: 1.25rem;
+        position: absolute;
+        padding: .6rem;
+        top: .6rem;
+        left: 1rem;
+        cursor: pointer;
+
+        .icon {
+            display: block;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    }
+}
+
+.sidebar {
+    font-size: 15px;
+    background-color: #fff;
+    width: 20rem;
+    position: fixed;
+    z-index: 10;
+    margin: 0;
+    top: 3.6rem;
+    left: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    border-right: 1px solid #eaecef;
+    overflow-y: auto;
+}
+
+.page {
+    padding-left: 20rem;
+    padding-top: 3.6rem;
+}
+
+@media (max-width: 719px) {
+
+    .navbar .sidebar-button {
+        display: block;
+    }
+
+    .logo {
+        margin-left: 1.5em;
+    }
+
+    .sidebar {
+        top: 0;
+        padding-top: 3.6rem;
+        transform: translateX(-100%);
+        transition: transform .4s ease;
+    }
+
+    .page {
+        padding-left: 0;
+
+        .page-content {
+            width: 100%;
+            margin: 0;
+            padding: 2em;
+        }
+    }
+
+}
 //Sidebar
 .sidebar .menu-item {
-    @apply .block .p-2 .border-b;
+    @apply .block .py-4 .px-6 .border-b;
 
     &:hover { @apply .text-teal-800 .bg-gray-200 }
 }

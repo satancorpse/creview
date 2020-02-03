@@ -1,35 +1,37 @@
 <template>
-    <header class="border-b sticky top-0 bg-white">
-        <nav class="flex items-center justify-between flex-wrap px-16 py-4 mx-left w-3/4">
-            <div class="block lg:hidden">
-                <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-                </button>
-            </div>
-            <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-                <div class="text-sm lg:flex-grow">
-                    <router-link
-                        to="/about"
-                        class="menu-item mr-4">
-                        About
-                    </router-link>
-                    <a href="#responsive-header" class="mr-4">Docs</a>
-                    <a href="#responsive-header" class="mr-4">Docs</a>
-                    <a href="#responsive-header" class="mr-4">Docs</a>
-                </div>
-                <div>
-                    <Logout></Logout>
-                </div>
-            </div>
-        </nav>
+    <header class="navbar flex justify-between">
+        <div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div>
+        <h1 class="logo text-center"><router-link :to="home"><i class="fa fa-gg"></i> iCode</router-link></h1>
+        <div>
+            <Logout></Logout>
+        </div>
     </header>
 </template>
 
 <script>
 import Logout from '../pages/Logout';
+import { mapGetters } from 'vuex';
 
 export default {
     components: { Logout },
+
+    data() {
+        return {
+            home: '/'
+        }
+    },
+
+    created() {
+        if(this.signedIn) {
+            this.home = '/dashboard'
+        }
+    },
+
+    computed: {
+        ...mapGetters({
+            signedIn: 'signedIn'
+        })
+    },
 }
 </script>
 

@@ -59,8 +59,14 @@ p {
 }
 
 a {
-    @apply .text-green-600
+    @apply .text-green-600;
+
+    &.link {
+        line-height: 2.7
+    }
 }
+
+
 
 //custom style
 .navbar {

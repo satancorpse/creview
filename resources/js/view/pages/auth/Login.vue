@@ -36,9 +36,7 @@
                         v-model="user.password"
 
                     />
-                    <p class="text-red-500 text-xs italic">
-                        Please choose a password.
-                    </p>
+
                 </div>
                 <div class="flex items-center justify-between">
                     <button
@@ -55,7 +53,7 @@
                 </div>
             </form>
             <p class="text-center text-gray-500 text-xs">
-                &copy;2020 Acme Corp. All rights reserved.
+                &copy;2020 SATANCORPSE. All rights reserved.
             </p>
         </div>
     </div>

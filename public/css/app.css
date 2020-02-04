@@ -11712,6 +11712,10 @@ a {
   color: #38a169;
 }
 
+a.link {
+  line-height: 2.7;
+}
+
 .navbar {
   position: fixed;
   top: 0;

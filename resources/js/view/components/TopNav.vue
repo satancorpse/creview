@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Logout from '../pages/Logout';
+import Logout from '../pages/auth/Logout';
 import { mapGetters } from 'vuex';
 
 export default {

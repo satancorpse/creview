@@ -1,17 +1,28 @@
 <template>
 
     <div>
+        <div class="page-title flex justify-between">
+            <h1><i class="fa fa-book"></i> List of all cooks</h1>
+            <router-link to="/create-cook" class="link">+ Add a new cook</router-link>
+        </div>
+
         <table class="table-auto w-full">
-            <thead class="border bg-teal-100">
+            <thead class="border bg-gray-200">
                 <tr>
-                    <th class="py-2" colspan="3">Recently added cooks</th>
+                    <th class="py-2 border">#</th>
+                    <th class="py-2 border">Name</th>
+                    <th class="py-2 border">Email</th>
+                    <th class="py-2 border">Phone</th>
+                    <th class="py-2 border">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(cook, index) in cooks" :key="cook.id">
                     <td class="border p-2 text-center">{{ index+1 }}</td>
                     <td class="border px-4 py-2">{{ cook.name }}</td>
-                    <td class="border p-1 text-center w-2/5">
+                    <td class="border px-4 py-2">{{ cook.email }}</td>
+                    <td class="border px-4 py-2">{{ cook.phone }}</td>
+                    <td class="border p-1 text-center">
                         <button class="btn-edit" @click.prevent="showModal(cook)">Edit</button>
                         <button class="btn-remove" @click.prevent="confirmRemove(cook)">Remove</button>
                     </td>
@@ -38,7 +49,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Modal from '../components/Modal';
+import Modal from '../../components/Modal';
 import EditCook from './EditCook';
 
 export default {

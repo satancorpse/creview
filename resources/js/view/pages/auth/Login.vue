@@ -34,7 +34,6 @@
                         type="password"
                         placeholder="Passcode"
                         v-model="user.password"
-
                     />
 
                 </div>

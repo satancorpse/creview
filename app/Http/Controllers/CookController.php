@@ -19,7 +19,7 @@ class CookController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|string|email|max:255|unique:cooks',
-            'phone' => ['nullable', 'regex:/(01|8801)[0-9]{9}/', 'unique:cooks'],
+            'phone' => ['nullable', 'regex:/(01)[0-9]{9}/', 'max:11','unique:cooks'],
         ]);
 
         $cook = Cook::create($validatedData);
@@ -32,7 +32,7 @@ class CookController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|string|email|max:255|unique:cooks,email,'.$cook->id,
-            'phone' => ['nullable', 'regex:/(01|8801)[0-9]{9}/', 'between:11,13', 'unique:cooks,phone,'.$cook->id],
+            'phone' => ['nullable', 'regex:/(01)[0-9]{9}/', 'max:11', 'unique:cooks,phone,'.$cook->id],
         ]);
 
         $cook->update($validatedData);

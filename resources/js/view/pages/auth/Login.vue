@@ -7,6 +7,10 @@
                 class="bg-white border shadow-md rounded px-16 pt-6 pb-8 mb-4"
                 @submit.prevent="requestLogin"
             >
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 px-4 py-2 mb-8" role="alert" v-if="server_error">
+                    <p class="mt-0">{{ server_error }}</p>
+                </div>
+
                 <div class="mb-4">
                     <label
                         class="block text-gray-700 text-sm font-bold mb-2"
@@ -14,11 +18,11 @@
                         >Email</label
                     >
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="email"
                         type="email"
                         placeholder="Email ID"
                         v-model="user.email"
+                        required
                     />
                 </div>
                 <div class="mb-6">
@@ -29,12 +33,13 @@
 
                     >
                     <input
-                        class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                         id="password"
                         type="password"
                         placeholder="Passcode"
                         v-model="user.password"
+                        required
                     />
+                    <!-- <p class="text-red-500 text-xs italic" v-if="errors.validation_errors.password">{{ errors.validation_errors.password }}</p> -->
 
                 </div>
                 <div class="flex items-center justify-between">
@@ -64,8 +69,9 @@ export default {
         return {
             user: {
                 email: '',
-                password: ''
-            }
+                password: '',
+            },
+            server_error: null,
         }
     },
 
@@ -76,12 +82,19 @@ export default {
                 this.$router.push({ name: 'dashboard' })
             })
             .catch(error => {
-                console.log(error)
+                console.log(error.response.data)
+                this.server_error = error.response.data.message
                 this.password = ''
             })
+        },
+
+        errorEmail() {
+            return this.errors.errors.email[0] ? true : false
         }
     }
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

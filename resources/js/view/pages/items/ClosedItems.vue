@@ -1,38 +1,33 @@
 <template>
     <div>
-        <div class="page-title flex justify-between">
-            <h1><i class="fa fa-book"></i> List of all items</h1>
-            <router-link to="/create-item" class="link">+ Add a new item</router-link>
+        <div class="page-title">
+            <h1><i class="fa fa-book"></i> Closed Items</h1>
         </div>
 
-        <table class="table-auto w-full">
+        <table class="table-auto w-full mb-8">
             <thead class="border bg-gray-200">
                 <tr>
                     <th class="py-2 border">#</th>
-                    <th class="py-2 border">Name</th>
+                    <th class="py-2 border">Item</th>
                     <th class="py-2 border">Cook</th>
-                    <th class="py-2 border">Status</th>
+                    <th class="py-2 border">Rating</th>
                     <th class="py-2 border">Action</th>
                 </tr>
             </thead>
-
             <tbody>
-                <tr v-for="(item, index) in items" :key="item.id">
+                <tr v-for="(item, index) in closed_items" :key="item.id">
                     <td class="border p-2 text-center">{{ index+1 }}</td>
-                    <td class="border px-4 py-2">{{ item.name }}</td>
-                    <td class="border px-4 py-2">{{ item.cook.name }}</td>
-                    <td class="border px-4 py-2 text-center">{{ item.publish ? 'Open' : 'Closed' }}</td>
+                    <td class="border px-4 py-2">
+                        <p class="mt-0 cursor-pointer" @click="redirectReview(item)">{{ item.name }}</p>
+                    </td>
+                    <td class="border px-4 py-2"><a href="#">{{ item.cook.name }}</a></td>
+                    <td class="border px-4 py-2 text-center">{{ item.meta_data.score_avg }}</td>
                     <td class="border p-1 text-center">
-                        <button class="btn-edit" @click.prevent="showModal(item)" v-if="item.publish">Edit</button>
                         <button class="btn-remove" @click.prevent="confirmRemove(item)">Remove</button>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-        <Modal @closeModal="closeModal" v-if="this.show">
-            <EditItem @updated="closeModal"></EditItem>
-        </Modal>
 
         <Modal v-if="this.confirm" @closeModal="closeModal" >
             <div>
@@ -47,13 +42,12 @@
 </template>
 
 <script>
-import EditItem from './EditItem';
 import Modal from '../../components/Modal';
 import { mapGetters } from 'vuex';
 
 export default {
 
-    components: { EditItem, Modal },
+    components: { Modal },
 
     data() {
         return {
@@ -68,20 +62,14 @@ export default {
 
     computed: {
         ...mapGetters({
-            items: 'items',
-            selectedItem: 'selectedItem'
+            closed_items: 'closed_items',
+            selectedItem: 'selectedItem',
         }),
     },
 
     methods: {
-        showModal(item) {
-            this.$store.commit('itemSelected', item)
-            this.$store.dispatch('fetchCooks')
-            this.show = true
-        },
 
         closeModal() {
-            this.show = false
             this.confirm = false
         },
 
@@ -98,6 +86,18 @@ export default {
             this.$store.dispatch('removeItem', item).then(res => {
                 this.confirm = false
             })
+        },
+
+        redirectReview(item) {
+            this.$router.push({ name: 'item-reviews', params: {id: item.id}}).catch(error => {
+                if (error.name != "NavigationDuplicated") {
+                    throw error;
+                }
+            })
+
+            this.$nextTick(function () {
+                console.log(item)
+            });
         },
     }
 }

@@ -23,7 +23,7 @@ const actions = {
                 score: data.review.score,
                 meta: JSON.stringify(data.review.meta),
                 feedback: data.review.feedback,
-                user_id: 1,
+                user_id: context.rootGetters.authId,
                 item_id: data.review.item_id
             }).then(res => {
                 console.log(res.data)

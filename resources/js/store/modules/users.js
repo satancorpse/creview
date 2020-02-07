@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const state = {
-    users: []
+    users: [],
+    user: []
 };
 
 const actions = {
@@ -11,6 +12,14 @@ const actions = {
 
         axios.get('/api/users').then(response => {
                 context.commit('usersFetched', response.data);
+            }).catch(error => {
+                console.error(error);
+        });
+    },
+
+    fetchProfile: (context, data) => {
+        axios.get('/api/profile/' + data).then(response => {
+            context.commit('profileFetched', response.data);
             }).catch(error => {
                 console.error(error);
         });
@@ -39,6 +48,10 @@ const actions = {
 const mutations = {
     usersFetched: (state, users) => {
         state.users = users;
+    },
+
+    profileFetched: (state, user) => {
+        state.user = user
     },
 
     userRegistered: (state, user) => {

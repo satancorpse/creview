@@ -8,7 +8,7 @@ class Item extends Model
 {
     protected $fillable = ['name', 'cook_id', 'publish', 'closed'];
 
-    protected $with = ['cook', 'reviews'];
+    // protected $with = ['cook', 'reviews'];
 
     public function reviews() {
         return $this->hasMany('App\Review');

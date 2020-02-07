@@ -1,9 +1,9 @@
 <template>
 
     <div>
-        <TopNav></TopNav>
+        <Header></Header>
 
-        <SideNav></SideNav>
+        <Sidebar></Sidebar>
 
         <div class="page">
             <div class="page-content w-5/6 mx-auto py-8">
@@ -15,19 +15,21 @@
 </template>
 
 <script>
-import TopNav from '../components/TopNav';
-import SideNav from '../components/SideNav';
+import Header from '../components/Header';
+import Sidebar from '../components/Sidebar';
 
 export default {
 
     components: {
-        TopNav,
-        SideNav,
+        Header,
+        Sidebar,
     },
 
 }
 </script>
 
 <style>
-
+.border-red-500 {
+    border-color: #f56565 !important;
+}
 </style>

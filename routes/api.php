@@ -3,6 +3,7 @@
 Route::middleware('auth:api')->group(function () {
     Route::get('/auth-user', 'AuthController@authUser');
     Route::get('/users', 'AuthController@getUsers')->middleware('scope:do_anything,can_update');
+    Route::get('/profile/{id}', 'AuthController@profile')->middleware('scope:do_anything,can_update');
     Route::post('/users/register', 'AuthController@register')->middleware('scope:do_anything,can_update');
     Route::post('/logout', 'AuthController@logout');
     Route::get('/cooks', 'CookController@index');
@@ -11,7 +12,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('/cooks/{cook}', 'CookController@destroy')->middleware('scope:do_anything,can_update');
 
     Route::get('/items', 'ItemController@index');
-    Route::get('/closed-reviews/{id}', 'ItemController@closed');
+    Route::get('/test/{id}', 'ItemController@test');
     Route::get('/items/{id}/reviews', 'ItemController@show')->middleware('scope:do_anything,can_update');
     Route::post('/items/create', 'ItemController@store')->middleware('scope:do_anything,can_update');
     Route::patch('/items/{item}', 'ItemController@update')->middleware('scope:do_anything,can_update');

@@ -22,13 +22,17 @@
                 ><i class="fa fa-list"></i> &nbsp; Manage Items</router-link
             >
         </h5>
+
+        <Footer></Footer>
     </div>
 
 </template>
 
 <script>
-export default {
+import Footer from './Footer';
 
+export default {
+    components: { Footer }
 };
 </script>
 

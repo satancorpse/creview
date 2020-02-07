@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use GuzzleHttp;
 
 use Illuminate\Support\Facades\Hash;
-
 use App\User;
+use App\Item;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -25,6 +25,18 @@ class AuthController extends Controller
         return response()->json($users, 200);
     }
 
+    public function profile($id) {
+
+        $user = User::findOrFail($id)->load('reviews');
+
+        foreach($user->reviews as $review) {
+            $item_id = $review->item_id;
+            $review->item = Item::findOrFail($item_id)->load('cook');
+        }
+
+        return response()->json($user);
+    }
+
     public function login(Request $request) {
 
         $request->validate([
@@ -33,7 +45,7 @@ class AuthController extends Controller
         ]);
 
         if( !Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response()->json('Unauthorized', 403);
+            return response()->json(['message' => 'Unauthorized! Incorrect credentials'], 403);
         }
 
         $user = $request->user();

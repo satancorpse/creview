@@ -11,8 +11,6 @@ const actions = {
         axios.get("/api/cooks").then(response => {
             context.commit("cooksFetched", response.data);
         }).catch(error => {
-            // eslint-disable-next-line
-            console.error(error);
             context.dispatch('logout')
         });
     },
@@ -22,11 +20,11 @@ const actions = {
             axios.post('/api/cooks/create', {
                 name: data.name,
                 email: data.email,
+                phone: data.phone,
             }).then(res => {
                 context.commit('cookCreated', res.data)
                 resolve(res)
             }).catch(err => {
-                console.log(err)
                 reject(err)
             })
         })
@@ -45,11 +43,11 @@ const actions = {
             axios.patch('/api/cooks/' + cook.id, {
                 name: cook.name,
                 email: cook.email,
+                phone: cook.phone,
             }).then(res => {
                 context.commit('cookUpdated', res.data)
                 resolve(res)
             }).catch(err => {
-                console.log(err)
                 reject(err)
             })
         })
@@ -61,7 +59,6 @@ const actions = {
                 context.commit('cookRemoved', cook.id)
                 resolve(res)
             }).catch(err => {
-                console.log(err)
                 reject(err)
             })
         })
@@ -76,7 +73,8 @@ const mutations = {
     cookCreated: (state, cook) => {
         state.cooks.push({
             name: cook.name,
-            email: cook.email
+            email: cook.email,
+            phone: cook.phone
         })
     },
 
@@ -84,6 +82,7 @@ const mutations = {
         state.selectedCook.id = cook.id
         state.selectedCook.name = cook.name
         state.selectedCook.email = cook.email
+        state.selectedCook.phone = cook.phone
     },
 
     updateName: (state, name) => {
@@ -94,6 +93,10 @@ const mutations = {
         state.selectedCook.email = email
     },
 
+    updatePhone: (state, phone) => {
+        state.selectedCook.phone = phone
+    },
+
     cookUpdated: (state, cook) => {
 
         const index = state.cooks.findIndex(i => i.id == cook.id)
@@ -101,12 +104,13 @@ const mutations = {
         state.cooks.splice(index, 1, {
             id: cook.id,
             name: cook.name,
-            email: cook.email
+            email: cook.email,
+            phone: cook.phone
         })
     },
 
     cookRemoved: (state, cook) => {
-        const index = state.cooks.findIndex(i => i.id == cook.id) + 1
+        const index = state.cooks.findIndex(i => i.id == cook)
 
         state.cooks.splice(index, 1)
     }

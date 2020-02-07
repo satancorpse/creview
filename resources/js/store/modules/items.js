@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = {
     items: [],
-    selectedItem: {id: '', name: '', cook: {name: ''}, publish: ''}
+    selectedItem: {id: '', name: '', cook: {name: ''}}
 };
 
 const actions = {
@@ -21,11 +21,9 @@ const actions = {
                 name: data.name,
                 cook_id: data.cook_id,
             }).then(res => {
-                console.log(res.data)
                 context.commit('itemCreated', res.data)
                 resolve(res)
             }).catch(err => {
-                console.log(err)
                 reject(err)
             })
         })
@@ -35,13 +33,11 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.patch('/api/items/' + item.id, {
                 name: item.name,
-                publish: item.publish,
                 cook_id: item.cook_id
             }).then(res => {
                 context.commit('itemUpdated', res.data)
                 resolve(res)
             }).catch(err => {
-                console.log(err)
                 reject(err)
             })
         })
@@ -53,7 +49,6 @@ const actions = {
                 context.commit('itemRemoved', item.id)
                 resolve(res)
             }).catch(err => {
-                console.log(err)
                 reject(err)
             })
         })
@@ -97,14 +92,13 @@ const mutations = {
         state.items.splice(index, 1, {
             id: item.id,
             name: item.name,
-            publish: item.publish,
-            cook_id: item.cook.id,
-            cook: { name: item.cook.name}
+            cook_id: item.cook_id,
+            cook: { name: item.cook.name }
         })
     },
 
     itemRemoved: (state, item) => {
-        const index = state.items.findIndex(i => i.id == item.id) + 1
+        const index = state.items.findIndex(i => i.id == item);
 
         state.items.splice(index, 1)
     }

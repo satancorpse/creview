@@ -34,9 +34,11 @@ const actions = {
           return new Promise((resolve, reject) => {
             axios.post('/api/logout')
               .then(response => {
-                localStorage.removeItem('cr_key')
-                localStorage.removeItem('auth_user')
-                context.commit('loggedout')
+                  if(response) {
+                    localStorage.removeItem('cr_key')
+                    localStorage.removeItem('auth_user')
+                    context.commit('loggedout')
+                  }
                 resolve(response)
               })
               .catch(error => {
@@ -68,7 +70,9 @@ const getters = {
     signedIn: state => state.access_token !== null,
     god: state => state.auth_user.user.role === 1,
     admin: state => state.auth_user.user.role === 2,
-    token: state => state.access_token
+    token: state => state.access_token,
+    authId: state => state.auth_user.user.id,
+    firstName: state => state.auth_user.user.name.split(' ').slice(-2).join(' ')
 };
 
 export default {

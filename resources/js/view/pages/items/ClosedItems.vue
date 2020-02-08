@@ -1,16 +1,18 @@
 <template>
     <div>
-        <div class="page-title">
-            <h1><i class="fa fa-book"></i> Closed Items</h1>
+        <div class="page-title mb-4">
+            <h1 class="m-0"><i class="fa fa-book"></i> Closed Items</h1>
         </div>
 
-        <table class="table-auto w-full mb-8">
+        <table class="table-auto w-full mb-8" v-if="closed_items.length">
+
             <thead class="border bg-gray-200">
                 <tr>
                     <th class="py-2 border">#</th>
                     <th class="py-2 border">Item</th>
                     <th class="py-2 border">Cook</th>
                     <th class="py-2 border">Rating</th>
+                    <th class="py-2 border">Major Issue</th>
                     <th class="py-2 border">Action</th>
                 </tr>
             </thead>
@@ -22,12 +24,17 @@
                     </td>
                     <td class="border px-4 py-2"><a href="#">{{ item.cook.name }}</a></td>
                     <td class="border px-4 py-2 text-center">{{ item.meta_data.score_avg }}</td>
+                    <td class="border px-4 py-2 text-center">{{ item.meta_data.top_issue.type }}</td>
                     <td class="border p-1 text-center">
                         <button class="btn-remove" @click.prevent="confirmRemove(item)">Remove</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="p-16 mt-16 bg-gray-100 border border-gray-300 shadow" v-else>
+            <h1 class="text-center"><i class="fa fa-rocket"></i> Nothing but empty space here!</h1>
+        </div>
 
         <Modal v-if="this.confirm" @closeModal="closeModal" >
             <div>

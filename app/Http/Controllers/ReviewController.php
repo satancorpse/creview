@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -24,9 +25,17 @@ class ReviewController extends Controller
             'item_id' => 'required|exists:items,id'
         ]);
 
-        Review::create($validatedData);
+        if(Auth::user()->reviews()->where('item_id', $request->item_id)->exists()) {
+            return response()->json(['message' => 'Feedback already submitted!'], 422);
+        }
 
-        return response()->json('Review submitted!', 201);
+        if($request->user_id != Auth::user()->id) {
+            return response()->json(['message' => 'Forbidden!'], 402);
+        }
+
+        $review = Review::create($validatedData);
+
+        return response()->json($review->load('user'), 201);
     }
 
     public function update(Request $request, Review $review) {

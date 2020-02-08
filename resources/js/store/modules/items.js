@@ -2,7 +2,7 @@ import axios from "axios";
 
 const state = {
     items: [],
-    selectedItem: {id: '', name: '', cook: {name: ''}}
+    selectedItem: {id: '', name: '', cook: {name: ''}},
 };
 
 const actions = {
@@ -29,13 +29,15 @@ const actions = {
         })
     },
 
-    updateItem: (context, item) => {
+    updateItem: (context, data) => {
         return new Promise((resolve, reject) => {
-            axios.patch('/api/items/' + item.id, {
-                name: item.name,
-                cook_id: item.cook_id
+            axios.patch('/api/items/' + data.item.id, {
+                name: data.item.name,
+                cook_id: data.item.cook_id,
+                publish: data.publish
             }).then(res => {
                 context.commit('itemUpdated', res.data)
+                context.commit('reviewClosed', res.data, {root: true})
                 resolve(res)
             }).catch(err => {
                 reject(err)
@@ -52,7 +54,7 @@ const actions = {
                 reject(err)
             })
         })
-    }
+    },
 }
 
 const mutations = {
@@ -66,7 +68,8 @@ const mutations = {
             cook_id: item.cook_id,
             cook: {
                 name: item.cook.name
-            }
+            },
+            meta_data: {}
         })
     },
 
@@ -93,6 +96,8 @@ const mutations = {
             id: item.id,
             name: item.name,
             cook_id: item.cook_id,
+            publish: item.publish,
+            meta_data: {},
             cook: { name: item.cook.name }
         })
     },
@@ -101,8 +106,7 @@ const mutations = {
         const index = state.items.findIndex(i => i.id == item);
 
         state.items.splice(index, 1)
-    }
-
+    },
 };
 
 const getters = {

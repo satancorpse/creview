@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="page-title flex justify-between">
-            <h1><i class="fa fa-book"></i> List of all items</h1>
+        <div class="page-title flex justify-between items-center mb-4">
+            <h1 class="m-0"><i class="fa fa-book"></i> List of all items</h1>
             <router-link to="/create-item" class="link">+ Add a new item</router-link>
         </div>
 

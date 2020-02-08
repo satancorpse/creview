@@ -24,7 +24,7 @@
                     params: { id: userId }
                 }"
                 class="mr-8"
-                ><i class="fa fa-user-circle-o"></i>
+                ><i class="fa fa-user-circle-o"></i>&nbsp;
                 {{ firstName }}</router-link
             >
 

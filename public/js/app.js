@@ -2252,110 +2252,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _pages_reviews_Reviews__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pages/reviews/Reviews */ "./resources/js/view/pages/reviews/Reviews.vue");
 //
 //
 //
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    this.$store.dispatch('fetchItems');
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
-    published_items: 'published_items',
-    closed_items: 'closed_items'
-  })),
-  methods: {
-    redirectSubmit: function redirectSubmit(item) {
-      this.$router.push({
-        name: 'submit-review',
-        params: {
-          id: item.id
-        }
-      })["catch"](function (error) {
-        if (error.name != "NavigationDuplicated") {
-          throw error;
-        }
-      });
-      this.$nextTick(function () {
-        this.$store.commit('itemSelected', item);
-      });
-    },
-    redirectReview: function redirectReview(item) {
-      this.$router.push({
-        name: 'item-reviews',
-        params: {
-          id: item.id
-        }
-      })["catch"](function (error) {
-        if (error.name != "NavigationDuplicated") {
-          throw error;
-        }
-      });
-      this.$nextTick(function () {
-        console.log(item);
-      });
-    }
+  components: {
+    Reviews: _pages_reviews_Reviews__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -2548,6 +2453,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -2963,6 +2872,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3271,7 +3187,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submitData: function submitData(item) {
       var _this = this;
 
-      this.$store.dispatch("updateItem", item).then(function (res) {
+      this.$store.dispatch("updateItem", {
+        item: item,
+        publish: true
+      }).then(function (res) {
         _this.$emit("updated");
       })["catch"](function (err) {
         var errs = err.response.data;
@@ -3325,10 +3244,100 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      reviewClosed: false
+    };
+  },
   created: function created() {
-    this.$store.dispatch('fetchItemReviews', this.$route.params.id).then(function (res) {
+    this.$store.dispatch("fetchItemReviews", this.$route.params.id).then(function (res) {
       console.log(res);
     });
   },
@@ -3337,7 +3346,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.reviews.itemReviews;
     }
   })),
-  methods: {}
+  methods: {
+    closeReview: function closeReview(item) {
+      this.$store.dispatch("updateItem", {
+        item: item,
+        publish: 0
+      }).then(function (res) {// console.log(res)
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -3451,6 +3470,267 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$store.dispatch('removeItem', item).then(function (res) {
         _this.confirm = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/items/PublishedItems.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/view/pages/items/PublishedItems.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EditItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditItem */ "./resources/js/view/pages/items/EditItem.vue");
+/* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Modal */ "./resources/js/view/components/Modal.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    EditItem: _EditItem__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Modal: _components_Modal__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      show: false,
+      confirm: false
+    };
+  },
+  created: function created() {
+    this.$store.dispatch('fetchItems');
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])({
+    published_items: 'published_items',
+    selectedItem: 'selectedItem'
+  })),
+  methods: {
+    showModal: function showModal(item) {
+      this.$store.commit('itemSelected', item);
+      this.$store.dispatch('fetchCooks');
+      this.show = true;
+    },
+    closeModal: function closeModal() {
+      this.show = false;
+      this.confirm = false;
+    },
+    confirmRemove: function confirmRemove(item) {
+      this.confirm = true;
+      this.$store.commit('itemSelected', item);
+    },
+    declineConfirm: function declineConfirm() {
+      this.confirm = false;
+    },
+    removeItem: function removeItem(item) {
+      var _this = this;
+
+      this.$store.dispatch('removeItem', item).then(function (res) {
+        _this.confirm = false;
+      });
+    },
+    redirectReview: function redirectReview(item) {
+      this.$router.push({
+        name: 'item-reviews',
+        params: {
+          id: item.id
+        }
+      })["catch"](function (error) {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
+      this.$nextTick(function () {
+        console.log(item);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/reviews/Reviews.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/view/pages/reviews/Reviews.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    this.$store.dispatch('fetchItems');
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
+    published_items: 'published_items',
+    closed_items: 'closed_items'
+  })),
+  methods: {
+    redirectSubmit: function redirectSubmit(item) {
+      this.$router.push({
+        name: 'submit-review',
+        params: {
+          id: item.id
+        }
+      })["catch"](function (error) {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
+      this.$nextTick(function () {
+        this.$store.commit('itemSelected', item);
+      });
+    },
+    redirectReview: function redirectReview(item) {
+      this.$router.push({
+        name: 'item-reviews',
+        params: {
+          id: item.id
+        }
+      })["catch"](function (error) {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
+      this.$nextTick(function () {
+        console.log(item);
       });
     }
   }
@@ -5065,7 +5345,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("router-view")], 1)
+  return _c("div", {}, [_c("router-view")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5207,7 +5487,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "fa fa-user-circle-o" }),
-            _vm._v("\n            " + _vm._s(_vm.firstName))
+            _vm._v(" \n            " + _vm._s(_vm.firstName))
           ]
         ),
         _vm._v(" "),
@@ -5635,173 +5915,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "page-title flex justify-between" },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          { staticClass: "link", attrs: { to: "/create-item" } },
-          [_vm._v("+ Publish a new item")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("table", { staticClass: "table-auto w-full mb-16" }, [
-      _vm._m(1),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.published_items, function(item, index) {
-          return _c("tr", { key: item.id }, [
-            _c("td", { staticClass: "border p-2 text-center" }, [
-              _vm._v(_vm._s(index + 1))
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "border px-4 py-2" }, [
-              _c(
-                "p",
-                {
-                  staticClass: "mt-0 cursor-pointer",
-                  on: {
-                    click: function($event) {
-                      return _vm.redirectReview(item)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(item.name))]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "border px-4 py-2" }, [
-              _c("a", { attrs: { href: "#" } }, [
-                _vm._v(_vm._s(item.cook.name))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "border p-1 text-center" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn-edit",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.redirectSubmit(item)
-                    }
-                  }
-                },
-                [_vm._v("Submit Feedback")]
-              )
-            ])
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _c("table", { staticClass: "table-auto w-full mb-8" }, [
-      _vm._m(3),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.closed_items, function(item, index) {
-          return _c("tr", { key: item.id }, [
-            _c("td", { staticClass: "border p-2 text-center" }, [
-              _vm._v(_vm._s(index + 1))
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "border px-4 py-2" }, [
-              _c(
-                "p",
-                {
-                  staticClass: "mt-0 cursor-pointer",
-                  on: {
-                    click: function($event) {
-                      return _vm.redirectReview(item)
-                    }
-                  }
-                },
-                [_vm._v(_vm._s(item.name))]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "border px-4 py-2" }, [
-              _c("a", { attrs: { href: "#" } }, [
-                _vm._v(_vm._s(item.cook.name))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "border px-4 py-2 text-center" }, [
-              _vm._v(_vm._s(item.meta_data.score_avg))
-            ])
-          ])
-        }),
-        0
-      )
-    ])
-  ])
+  return _c("Reviews")
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h1", [
-      _c("i", { staticClass: "fa fa-book" }),
-      _vm._v(" Available reviews")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "border bg-gray-200" }, [
-      _c("tr", [
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("Item")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("Cook")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("Action")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-title flex justify-between" }, [
-      _c("h1", [
-        _c("i", { staticClass: "fa fa-book" }),
-        _vm._v(" Recently closed reviews")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "border bg-gray-200" }, [
-      _c("tr", [
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("Item")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("Cook")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "py-2 border" }, [_vm._v("Rating")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -6080,76 +6196,82 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "page-title flex justify-between" },
+        { staticClass: "page-title flex justify-between items-center mb-4" },
         [
           _vm._m(0),
           _vm._v(" "),
-          _c(
-            "router-link",
-            { staticClass: "link", attrs: { to: "/create-cook" } },
-            [_vm._v("+ Add a new cook")]
-          )
+          _c("router-link", { attrs: { to: "/create-cook" } }, [
+            _vm._v("+ Add a new cook")
+          ])
         ],
         1
       ),
       _vm._v(" "),
-      _c("table", { staticClass: "table-auto w-full" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.cooks, function(cook, index) {
-            return _c("tr", { key: cook.id }, [
-              _c("td", { staticClass: "border p-2 text-center" }, [
-                _vm._v(_vm._s(index + 1))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border px-4 py-2" }, [
-                _vm._v(_vm._s(cook.name))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border px-4 py-2" }, [
-                _vm._v(_vm._s(cook.email))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border px-4 py-2" }, [
-                _vm._v(_vm._s(cook.phone))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border p-1 text-center" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn-edit",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.showModal(cook)
-                      }
-                    }
-                  },
-                  [_vm._v("Edit")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn-remove",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.confirmRemove(cook)
-                      }
-                    }
-                  },
-                  [_vm._v("Remove")]
-                )
-              ])
-            ])
-          }),
-          0
-        )
-      ]),
+      _vm.cooks.length
+        ? _c("table", { staticClass: "table-auto w-full" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.cooks, function(cook, index) {
+                return _c("tr", { key: cook.id }, [
+                  _c("td", { staticClass: "border p-2 text-center" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2" }, [
+                    _vm._v(_vm._s(cook.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2" }, [
+                    _vm._v(_vm._s(cook.email))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2" }, [
+                    _vm._v(_vm._s(cook.phone))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border p-1 text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-edit",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.showModal(cook)
+                          }
+                        }
+                      },
+                      [_vm._v("Edit")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-remove",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.confirmRemove(cook)
+                          }
+                        }
+                      },
+                      [_vm._v("Remove")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        : _c(
+            "div",
+            {
+              staticClass: "p-16 mb-8 bg-gray-100 border border-gray-300 shadow"
+            },
+            [_vm._m(2)]
+          ),
       _vm._v(" "),
       this.show
         ? _c(
@@ -6208,7 +6330,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h1", [
+    return _c("h1", { staticClass: "m-0" }, [
       _c("i", { staticClass: "fa fa-book" }),
       _vm._v(" List of all cooks")
     ])
@@ -6229,6 +6351,15 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "py-2 border" }, [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "fa fa-rocket" }),
+      _vm._v(" Nothing but empty space here!")
     ])
   }
 ]
@@ -6620,62 +6751,75 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      _c("table", { staticClass: "table-auto w-full mb-8" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.closed_items, function(item, index) {
-            return _c("tr", { key: item.id }, [
-              _c("td", { staticClass: "border p-2 text-center" }, [
-                _vm._v(_vm._s(index + 1))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border px-4 py-2" }, [
-                _c(
-                  "p",
-                  {
-                    staticClass: "mt-0 cursor-pointer",
-                    on: {
-                      click: function($event) {
-                        return _vm.redirectReview(item)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(item.name))]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border px-4 py-2" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _vm._v(_vm._s(item.cook.name))
+      _vm.closed_items.length
+        ? _c("table", { staticClass: "table-auto w-full mb-8" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.closed_items, function(item, index) {
+                return _c("tr", { key: item.id }, [
+                  _c("td", { staticClass: "border p-2 text-center" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2" }, [
+                    _c(
+                      "p",
+                      {
+                        staticClass: "mt-0 cursor-pointer",
+                        on: {
+                          click: function($event) {
+                            return _vm.redirectReview(item)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(item.name))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2" }, [
+                    _c("a", { attrs: { href: "#" } }, [
+                      _vm._v(_vm._s(item.cook.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2 text-center" }, [
+                    _vm._v(_vm._s(item.meta_data.score_avg))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2 text-center" }, [
+                    _vm._v(_vm._s(item.meta_data.top_issue.type))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border p-1 text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-remove",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.confirmRemove(item)
+                          }
+                        }
+                      },
+                      [_vm._v("Remove")]
+                    )
+                  ])
                 ])
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border px-4 py-2 text-center" }, [
-                _vm._v(_vm._s(item.meta_data.score_avg))
-              ]),
-              _vm._v(" "),
-              _c("td", { staticClass: "border p-1 text-center" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn-remove",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.confirmRemove(item)
-                      }
-                    }
-                  },
-                  [_vm._v("Remove")]
-                )
-              ])
-            ])
-          }),
-          0
-        )
-      ]),
+              }),
+              0
+            )
+          ])
+        : _c(
+            "div",
+            {
+              staticClass:
+                "p-16 mt-16 bg-gray-100 border border-gray-300 shadow"
+            },
+            [_vm._m(2)]
+          ),
       _vm._v(" "),
       this.confirm
         ? _c("Modal", { on: { closeModal: _vm.closeModal } }, [
@@ -6725,8 +6869,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-title" }, [
-      _c("h1", [
+    return _c("div", { staticClass: "page-title mb-4" }, [
+      _c("h1", { staticClass: "m-0" }, [
         _c("i", { staticClass: "fa fa-book" }),
         _vm._v(" Closed Items")
       ])
@@ -6746,8 +6890,19 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "py-2 border" }, [_vm._v("Rating")]),
         _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Major Issue")]),
+        _vm._v(" "),
         _c("th", { staticClass: "py-2 border" }, [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "fa fa-rocket" }),
+      _vm._v(" Nothing but empty space here!")
     ])
   }
 ]
@@ -7138,98 +7293,207 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h3", { staticClass: "mt-0 mb-2" }, [
-        _vm._v("Item: "),
-        _c("span", { staticClass: "text-teal-600" }, [
-          _vm._v(_vm._s(_vm.itemReviews.name))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("h6", [
-        _vm._v("Offered by - "),
-        _c("span", { staticClass: "text-teal-600" }, [
-          _vm._v(_vm._s(_vm.itemReviews.cook.name))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("h4", { staticClass: " mb-2" }, [_vm._v("Summary:")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "review_summary bg-gray-100 p-8 mb-8 border" }, [
-        _c("h6", [
-          _vm._v("Total reviews: "),
+  return _c("div", [
+    _c("div", { staticClass: "flex justify-between" }, [
+      _c("div", [
+        _c("h3", { staticClass: "mt-0 mb-2" }, [
           _c("span", { staticClass: "text-teal-600" }, [
-            _vm._v(_vm._s(_vm.itemReviews.meta_data.score_count))
+            _vm._v(_vm._s(_vm.itemReviews.name))
           ])
         ]),
         _vm._v(" "),
         _c("h6", [
-          _vm._v("Overall score: "),
+          _vm._v("\n                Offered by -\n                "),
           _c("span", { staticClass: "text-teal-600" }, [
-            _vm._v(_vm._s(_vm.itemReviews.meta_data.score_avg))
-          ])
-        ]),
-        _vm._v(" "),
-        _c("h6", [
-          _c("span", { staticClass: "text-teal-600" }, [
-            _vm._v(
-              _vm._s(_vm.itemReviews.meta_data.top_issue.count) +
-                " person complaint about the "
-            ),
-            _c("span", { staticClass: "text-red-600 italic" }, [
-              _vm._v(_vm._s(_vm.itemReviews.meta_data.top_issue.type))
-            ]),
-            _vm._v(" of the item.")
+            _vm._v(_vm._s(_vm.itemReviews.cook.name))
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
-      _c("h4", { staticClass: "mt-8 mb-2" }, [_vm._v("Reviews:")]),
-      _vm._v(" "),
-      _vm._l(_vm.itemReviews.reviews, function(review, index) {
-        return _c(
-          "div",
-          { key: review.id, staticClass: "mb-4 bg-gray-100 shadow border p-4" },
-          [
-            _c("h6", { staticClass: "mb-1" }, [
-              _vm._v("Reviewer: "),
-              _c("span", { staticClass: "text-teal-600" }, [
-                _vm._v(_vm._s(review.user.name))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("h6", { staticClass: "mb-1" }, [
-              _vm._v("Score: "),
-              _c("span", { staticClass: "text-teal-600" }, [
-                _vm._v(_vm._s(review.score))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("h6", { staticClass: "mb-1" }, [
-              _vm._v("Meta: "),
-              _c("span", { staticClass: "text-teal-600" }, [
-                _vm._v(_vm._s(review.meta))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("h6", { staticClass: "mb-1" }, [
-              _vm._v("Feedback: "),
-              _c("span", { staticClass: "text-teal-600" }, [
-                _vm._v(_vm._s(review.feedback))
+      _c("div", { staticClass: "flex items-center" }, [
+        _vm.itemReviews.publish
+          ? _c(
+              "button",
+              {
+                staticClass: "btn-primary text-xs",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.closeReview(_vm.itemReviews)
+                  }
+                }
+              },
+              [_vm._v("\n                Mark as closed\n            ")]
+            )
+          : _c("span", { staticClass: "text-gray-800 border px-4 py-2 mt-2" }, [
+              _c("i", { staticClass: "fa fa-power-off" }),
+              _vm._v("  Closed for new\n                reviews")
+            ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _vm.itemReviews.reviews.length
+      ? _c("div", { staticClass: "flex container mt-8" }, [
+          _c(
+            "div",
+            { staticClass: "w-3/4 pr-4" },
+            _vm._l(_vm.itemReviews.reviews, function(review, index) {
+              return _c(
+                "div",
+                {
+                  key: review.id,
+                  staticClass: "mb-4 bg-gray-100 shadow border p-4"
+                },
+                [
+                  _c("h6", { staticClass: "mb-2" }, [
+                    _vm._v(
+                      "\n                    Reviewer:\n                    "
+                    ),
+                    _c("span", { staticClass: "text-green-700 normal-case" }, [
+                      _vm._v(_vm._s(review.user.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("h6", { staticClass: "mb-2" }, [
+                    _vm._v(
+                      "\n                    Score:\n                    "
+                    ),
+                    _c("span", { staticClass: "text-green-700" }, [
+                      _vm._v(_vm._s(review.score))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "h6",
+                    { staticClass: "mb-2" },
+                    [
+                      _vm._v("\n                    Major Issues: "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _vm._l(JSON.parse(review.meta).type, function(
+                        type,
+                        index
+                      ) {
+                        return _c(
+                          "span",
+                          {
+                            key: index,
+                            staticClass: "text-green-700 normal-case"
+                          },
+                          [_vm._v("- " + _vm._s(type)), _c("br")]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("h6", { staticClass: "mb-2" }, [
+                    _vm._v("\n                    Other Issues: "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-green-700 normal-case" }, [
+                      _vm._v(
+                        "- " +
+                          _vm._s(
+                            JSON.parse(review.meta).other || "Not specified!"
+                          )
+                      ),
+                      _c("br")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("h6", { staticClass: "mb-2" }, [
+                    _vm._v(
+                      "\n                    Feedback:\n                    "
+                    ),
+                    _c("span", { staticClass: "text-green-700 normal-case" }, [
+                      _vm._v(_vm._s(review.feedback))
+                    ])
+                  ])
+                ]
+              )
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-1/4" }, [
+            _c("div", { staticClass: "review_summary p-8 pt-2 mb-8" }, [
+              _c("h6", [
+                _vm._v(
+                  "\n                    Total reviews:\n                    "
+                ),
+                _c("span", { staticClass: "text-teal-600" }, [
+                  _vm._v(_vm._s(_vm.itemReviews.meta_data.score_count))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("h6", [
+                _vm._v(
+                  "\n                    Overall score:\n                    "
+                ),
+                _c("span", { staticClass: "text-teal-600" }, [
+                  _vm._v(_vm._s(_vm.itemReviews.meta_data.score_avg))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("h6", [
+                _c("span", [
+                  _vm._v(
+                    _vm._s(_vm.itemReviews.meta_data.top_issue.count) +
+                      " person\n                        complaint about the\n                        "
+                  ),
+                  _c("span", { staticClass: "text-red-600 italic" }, [
+                    _vm._v(_vm._s(_vm.itemReviews.meta_data.top_issue.type))
+                  ]),
+                  _vm._v("\n                        of the item.")
+                ])
               ])
             ])
+          ])
+        ])
+      : _c(
+          "div",
+          {
+            staticClass:
+              "p-16 mt-16 bg-gray-100 border border-gray-300 shadow mb-4"
+          },
+          [
+            _c("h1", { staticClass: "text-center" }, [
+              _vm._v("Nobody submitted a review yet!")
+            ])
           ]
+        ),
+    _vm._v(" "),
+    !_vm.itemReviews.meta_data.user_has_review
+      ? _c(
+          "div",
+          [
+            _vm.itemReviews.id
+              ? _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "border px-4 py-2 mt-4 inline-block text-center",
+                    attrs: {
+                      to: {
+                        name: "submit-review",
+                        params: { id: _vm.itemReviews.id }
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-pencil" }),
+                    _vm._v("   Submit a\n            review")
+                  ]
+                )
+              : _vm._e()
+          ],
+          1
         )
-      })
-    ],
-    2
-  )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -7258,7 +7522,7 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "page-title flex justify-between" },
+        { staticClass: "page-title flex justify-between items-center mb-4" },
         [
           _vm._m(0),
           _vm._v(" "),
@@ -7388,7 +7652,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h1", [
+    return _c("h1", { staticClass: "m-0" }, [
       _c("i", { staticClass: "fa fa-book" }),
       _vm._v(" List of all items")
     ])
@@ -7409,6 +7673,427 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "py-2 border" }, [_vm._v("Action")])
       ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/items/PublishedItems.vue?vue&type=template&id=06c75670&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/view/pages/items/PublishedItems.vue?vue&type=template&id=06c75670& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "div",
+        { staticClass: "page-title flex justify-between items-center mb-4" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("router-link", { attrs: { to: "/create-item" } }, [
+            _vm._v("+ Add a new item")
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.published_items.length
+        ? _c("table", { staticClass: "table-auto w-full" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.published_items, function(item, index) {
+                return _c("tr", { key: item.id }, [
+                  _c("td", { staticClass: "border p-2 text-center" }, [
+                    _vm._v(_vm._s(index + 1))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2" }, [
+                    _c(
+                      "p",
+                      {
+                        staticClass: "mt-0 cursor-pointer",
+                        on: {
+                          click: function($event) {
+                            return _vm.redirectReview(item)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(item.name))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border px-4 py-2" }, [
+                    _vm._v(_vm._s(item.cook.name))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "border p-1 text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-edit",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.showModal(item)
+                          }
+                        }
+                      },
+                      [_vm._v("Edit")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn-remove",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.confirmRemove(item)
+                          }
+                        }
+                      },
+                      [_vm._v("Remove")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        : _c(
+            "div",
+            {
+              staticClass:
+                "p-16 mt-16 bg-gray-100 border border-gray-300 shadow"
+            },
+            [_vm._m(2)]
+          ),
+      _vm._v(" "),
+      this.show
+        ? _c(
+            "Modal",
+            { on: { closeModal: _vm.closeModal } },
+            [_c("EditItem", { on: { updated: _vm.closeModal } })],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      this.confirm
+        ? _c("Modal", { on: { closeModal: _vm.closeModal } }, [
+            _c("div", [
+              _c("h3", [_vm._v("Are you sure?")]),
+              _vm._v(" "),
+              _c("h6", [
+                _vm._v("This will remove "),
+                _c("span", { staticClass: "text-teal-600" }, [
+                  _vm._v(_vm._s(_vm.selectedItem.name))
+                ]),
+                _vm._v(" as well as all associated reviews from the database")
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn-primary",
+                  on: {
+                    click: function($event) {
+                      return _vm.removeItem(_vm.selectedItem)
+                    }
+                  }
+                },
+                [_vm._v("Yes")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn-warning",
+                  on: { click: _vm.declineConfirm }
+                },
+                [_vm._v("No")]
+              )
+            ])
+          ])
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "m-0" }, [
+      _c("i", { staticClass: "fa fa-book" }),
+      _vm._v(" List of all items")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "border bg-gray-200" }, [
+      _c("tr", [
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Cook")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "fa fa-rocket" }),
+      _vm._v(" Nothing but empty space here!")
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/reviews/Reviews.vue?vue&type=template&id=6d2b2460&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/view/pages/reviews/Reviews.vue?vue&type=template&id=6d2b2460& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "page-title flex justify-between" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          { staticClass: "link", attrs: { to: "/create-item" } },
+          [_vm._v("+ Publish a new item")]
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _vm.published_items.length
+      ? _c("table", { staticClass: "table-auto w-full mb-16" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.published_items, function(item, index) {
+              return _c("tr", { key: item.id }, [
+                _c("td", { staticClass: "border p-2 text-center" }, [
+                  _vm._v(_vm._s(index + 1))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "border px-4 py-2" }, [
+                  _c(
+                    "p",
+                    {
+                      staticClass: "mt-0 cursor-pointer",
+                      on: {
+                        click: function($event) {
+                          return _vm.redirectReview(item)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(item.name))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "border px-4 py-2" }, [
+                  _c("a", { attrs: { href: "#" } }, [
+                    _vm._v(_vm._s(item.cook.name))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "border p-1 text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn-edit",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.redirectSubmit(item)
+                        }
+                      }
+                    },
+                    [_vm._v("Submit Feedback")]
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      : _c(
+          "div",
+          {
+            staticClass: "p-16 mb-8 bg-gray-100 border border-gray-300 shadow"
+          },
+          [_vm._m(2)]
+        ),
+    _vm._v(" "),
+    _vm._m(3),
+    _vm._v(" "),
+    _vm.closed_items.length
+      ? _c("table", { staticClass: "table-auto w-full mb-8" }, [
+          _vm._m(4),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.closed_items, function(item, index) {
+              return _c("tr", { key: item.id }, [
+                _c("td", { staticClass: "border p-2 text-center" }, [
+                  _vm._v(_vm._s(index + 1))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "border px-4 py-2" }, [
+                  _c(
+                    "p",
+                    {
+                      staticClass: "mt-0 cursor-pointer",
+                      on: {
+                        click: function($event) {
+                          return _vm.redirectReview(item)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(item.name))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "border px-4 py-2" }, [
+                  _c("a", { attrs: { href: "#" } }, [
+                    _vm._v(_vm._s(item.cook.name))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "border px-4 py-2 text-center" }, [
+                  _vm._v(_vm._s(item.meta_data.score_avg))
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      : _c(
+          "div",
+          {
+            staticClass: "p-16 mb-8 bg-gray-100 border border-gray-300 shadow"
+          },
+          [_vm._m(5)]
+        )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", [
+      _c("i", { staticClass: "fa fa-book" }),
+      _vm._v(" Available reviews")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "border bg-gray-200" }, [
+      _c("tr", [
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Item")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Cook")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "fa fa-rocket" }),
+      _vm._v(" Nothing but empty space here!")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "page-title flex justify-between" }, [
+      _c("h1", [
+        _c("i", { staticClass: "fa fa-book" }),
+        _vm._v(" Recently closed reviews")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "border bg-gray-200" }, [
+      _c("tr", [
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Item")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Cook")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "py-2 border" }, [_vm._v("Rating")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "fa fa-rocket" }),
+      _vm._v(" Nothing but empty space here!")
     ])
   }
 ]
@@ -24881,13 +25566,17 @@ var actions = {
       });
     });
   },
-  updateItem: function updateItem(context, item) {
+  updateItem: function updateItem(context, data) {
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('/api/items/' + item.id, {
-        name: item.name,
-        cook_id: item.cook_id
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.patch('/api/items/' + data.item.id, {
+        name: data.item.name,
+        cook_id: data.item.cook_id,
+        publish: data.publish
       }).then(function (res) {
         context.commit('itemUpdated', res.data);
+        context.commit('reviewClosed', res.data, {
+          root: true
+        });
         resolve(res);
       })["catch"](function (err) {
         reject(err);
@@ -24915,7 +25604,8 @@ var mutations = {
       cook_id: item.cook_id,
       cook: {
         name: item.cook.name
-      }
+      },
+      meta_data: {}
     });
   },
   itemSelected: function itemSelected(state, item) {
@@ -24938,6 +25628,8 @@ var mutations = {
       id: item.id,
       name: item.name,
       cook_id: item.cook_id,
+      publish: item.publish,
+      meta_data: {},
       cook: {
         name: item.cook.name
       }
@@ -24992,6 +25684,7 @@ __webpack_require__.r(__webpack_exports__);
 var state = {
   itemReviews: {
     cook: {},
+    meta_data: {},
     reviews: {}
   }
 };
@@ -25013,8 +25706,6 @@ var actions = {
         user_id: context.rootGetters.authId,
         item_id: data.review.item_id
       }).then(function (res) {
-        console.log(res.data);
-        context.commit('reviewSubmitted', res.data);
         resolve(res);
       })["catch"](function (err) {
         console.log(err);
@@ -25027,8 +25718,8 @@ var mutations = {
   ItemReviewsFetched: function ItemReviewsFetched(state, reviews) {
     state.itemReviews = reviews;
   },
-  reviewSubmitted: function reviewSubmitted(state, review) {
-    state.reviews.push(review);
+  reviewClosed: function reviewClosed(state) {
+    state.itemReviews.publish = 0;
   }
 };
 var getters = {};
@@ -26406,17 +27097,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _PublishedItems_vue_vue_type_template_id_06c75670___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PublishedItems.vue?vue&type=template&id=06c75670& */ "./resources/js/view/pages/items/PublishedItems.vue?vue&type=template&id=06c75670&");
+/* harmony import */ var _PublishedItems_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PublishedItems.vue?vue&type=script&lang=js& */ "./resources/js/view/pages/items/PublishedItems.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PublishedItems_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PublishedItems_vue_vue_type_template_id_06c75670___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PublishedItems_vue_vue_type_template_id_06c75670___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -26424,8 +27118,111 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/view/pages/items/PublishedItems.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/view/pages/items/PublishedItems.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/view/pages/items/PublishedItems.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PublishedItems_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PublishedItems.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/items/PublishedItems.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PublishedItems_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/view/pages/items/PublishedItems.vue?vue&type=template&id=06c75670&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/view/pages/items/PublishedItems.vue?vue&type=template&id=06c75670& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PublishedItems_vue_vue_type_template_id_06c75670___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./PublishedItems.vue?vue&type=template&id=06c75670& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/items/PublishedItems.vue?vue&type=template&id=06c75670&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PublishedItems_vue_vue_type_template_id_06c75670___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PublishedItems_vue_vue_type_template_id_06c75670___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/view/pages/reviews/Reviews.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/view/pages/reviews/Reviews.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Reviews_vue_vue_type_template_id_6d2b2460___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Reviews.vue?vue&type=template&id=6d2b2460& */ "./resources/js/view/pages/reviews/Reviews.vue?vue&type=template&id=6d2b2460&");
+/* harmony import */ var _Reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Reviews.vue?vue&type=script&lang=js& */ "./resources/js/view/pages/reviews/Reviews.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Reviews_vue_vue_type_template_id_6d2b2460___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Reviews_vue_vue_type_template_id_6d2b2460___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/view/pages/reviews/Reviews.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/view/pages/reviews/Reviews.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/view/pages/reviews/Reviews.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Reviews.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/reviews/Reviews.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Reviews_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/view/pages/reviews/Reviews.vue?vue&type=template&id=6d2b2460&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/view/pages/reviews/Reviews.vue?vue&type=template&id=6d2b2460& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Reviews_vue_vue_type_template_id_6d2b2460___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Reviews.vue?vue&type=template&id=6d2b2460& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/view/pages/reviews/Reviews.vue?vue&type=template&id=6d2b2460&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Reviews_vue_vue_type_template_id_6d2b2460___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Reviews_vue_vue_type_template_id_6d2b2460___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

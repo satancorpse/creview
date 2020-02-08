@@ -3,6 +3,7 @@ import axios from "axios";
 const state = {
     itemReviews: {
         cook: {},
+        meta_data: {},
         reviews: {}
     }
 };
@@ -26,8 +27,6 @@ const actions = {
                 user_id: context.rootGetters.authId,
                 item_id: data.review.item_id
             }).then(res => {
-                console.log(res.data)
-                context.commit('reviewSubmitted', res.data)
                 resolve(res)
             }).catch(err => {
                 console.log(err)
@@ -42,8 +41,8 @@ const mutations = {
         state.itemReviews = reviews
     },
 
-    reviewSubmitted: (state, review) => {
-        state.reviews.push(review)
+    reviewClosed: (state) => {
+        state.itemReviews.publish = 0
     }
 };
 

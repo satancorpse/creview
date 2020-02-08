@@ -110,7 +110,7 @@ export default {
 
     methods: {
         submitData(item) {
-            this.$store.dispatch("updateItem", item).then(res => {
+            this.$store.dispatch("updateItem", {item, publish: true}).then(res => {
                 this.$emit("updated");
             })
             .catch(err => {

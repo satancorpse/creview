@@ -1,12 +1,12 @@
 <template>
 
     <div>
-        <div class="page-title flex justify-between">
-            <h1><i class="fa fa-book"></i> List of all cooks</h1>
-            <router-link to="/create-cook" class="link">+ Add a new cook</router-link>
+        <div class="page-title flex justify-between items-center mb-4">
+            <h1 class="m-0"><i class="fa fa-book"></i> List of all cooks</h1>
+            <router-link to="/create-cook">+ Add a new cook</router-link>
         </div>
 
-        <table class="table-auto w-full">
+        <table class="table-auto w-full" v-if="cooks.length">
             <thead class="border bg-gray-200">
                 <tr>
                     <th class="py-2 border">#</th>
@@ -29,6 +29,10 @@
                 </tr>
             </tbody>
         </table>
+
+        <div class="p-16 mb-8 bg-gray-100 border border-gray-300 shadow" v-else>
+            <h1 class="text-center"><i class="fa fa-rocket"></i> Nothing but empty space here!</h1>
+        </div>
 
         <Modal @closeModal="closeModal" v-if="this.show">
             <EditCook @updated="closeModal"></EditCook>

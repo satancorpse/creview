@@ -91,6 +91,60 @@ class AuthController extends Controller
 
     }
 
+    public function update(Request $request, $id) {
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:350',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+            'role' => 'required|between:0,2|numeric'
+        ]);
+
+        $user = User::findOrFail($id);
+
+        if(Auth::user()->role !== 1 || $user->role === 1) {
+            $validatedData['role'] = $user->role;
+        }
+
+        //unauthorized if the logged in user is not an admin or super-admin and tries to edit admin/super-admin or user other than him
+        if(Auth::user()->id !== $id && Auth::user()->role !== 1 && Auth::user()->role !== 2) {
+            return response()->json('Unauthorized!', 401);
+        }
+
+        //unauthorized if the user is not super-admin and tries to edit a super-admin or assign a super-admin role to any user
+        if($user->role === 1 && Auth::user()->role !== 1) {
+            return response()->json('Unauthorized!', 401);
+        }
+
+        //unauthorized if the user is not an admin or a super-admin and tries to edit the admin or assign admin role to any user
+        if($user->role === 2 && Auth::user()->role !== 2 && Auth::user()->role !== 1) {
+            return response()->json('Unauthorized!', 401);
+        }
+
+        //proceed to updating the user
+        $user->update($validatedData);
+
+        return response()->json($user, 201);
+    }
+
+    public function destroy(User $user) {
+
+        if(Auth::user()->role !== 1 && Auth::user()->role !== 2) {
+            return response()->json('Unauthorized!', 401);
+        }
+
+        if($user->role === 1) {
+            return response()->json('Unauthorized!', 401);
+        }
+
+        if($user->role === 2 && Auth::user()->role !== 1) {
+            return response()->json('Unauthorized!', 401);
+        }
+
+        $user->delete();
+
+        return response()->json('Removed!', 200);
+    }
+
     public function logout() {
 
         auth()->user()->tokens->each(function($token, $key) {

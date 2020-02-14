@@ -2,8 +2,7 @@
     <div>
         <div class="page-title flex justify-between">
             <h1><i class="fa fa-book"></i> List of all registered users</h1>
-            <router-link to="/create-user" class="link"
-                >+ Add a new user</router-link
+            <router-link to="/create-user" class="link" v-if="!isReviewer">+ Add a new user</router-link
             >
         </div>
         <table class="table-auto w-full">
@@ -13,7 +12,7 @@
                     <th class="py-2 border">Name</th>
                     <th class="py-2 border">Email</th>
                     <th class="py-2 border">Role</th>
-                    <th class="py-2 border">Action</th>
+                    <th class="py-2 border" v-if="!isReviewer">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,21 +31,33 @@
                     <td class="border px-4 py-2 text-center">
                         {{ userType(user.role) }}
                     </td>
-                    <td class="border p-1 text-center">
-                        <button
-                            class="btn-edit"
-                            @click.prevent="showModal(user)"
-                        >
-                            Edit
-                        </button>
-                        <button class="btn-remove">Remove</button>
+                    <td class="border p-1 text-center" v-if="!isReviewer">
+                        <div  v-if="user.role !== 1">
+                            <button
+                                class="btn-edit"
+                                @click.prevent="showModal(user.id)"
+                            >
+                                Edit
+                            </button>
+                            <button class="btn-remove" @click.prevent="confirmRemove(user)" v-if="user.role !== 2 || isGod">Remove</button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
 
         <Modal submitText="Update" @closeModal="closeModal" v-if="this.show">
-            <EditUser></EditUser>
+            <EditUser @updated="closeModal"></EditUser>
+        </Modal>
+
+        <Modal v-if="this.confirm" @closeModal="closeModal" >
+            <div>
+                <h3>Are you sure?</h3>
+                <h6>This will remove <span class="text-teal-600">{{ user.name }}</span> and the associated reviews from the database</h6>
+                <hr>
+                <button class="btn-primary" @click="removeUser(user)">Yes</button>
+                <button class="btn-warning" @click="declineConfirm">No</button>
+            </div>
         </Modal>
     </div>
 </template>
@@ -61,8 +72,9 @@ export default {
 
     data() {
         return {
-            show: false
-        };
+            show: false,
+            confirm: false
+        }
     },
 
     created() {
@@ -71,18 +83,14 @@ export default {
 
     computed: {
         ...mapGetters({
-            users: "users"
+            users: "users",
+            user: "selectedUser",
+            isGod: "god",
+            isReviewer: 'reviewer'
         })
     },
 
     methods: {
-        showModal(user) {
-            this.show = true;
-        },
-
-        closeModal() {
-            this.show = false;
-        },
 
         userType($role_id) {
             if ($role_id === 0) {
@@ -94,6 +102,31 @@ export default {
             } else {
                 return null;
             }
+        },
+
+        showModal(user) {
+            this.show = true;
+            this.$store.dispatch('fetchProfile', user)
+        },
+
+        closeModal() {
+            this.show = false;
+            this.confirm = false;
+        },
+
+        confirmRemove(user) {
+            this.confirm = true
+            this.$store.commit('profileFetched', user)
+        },
+
+        declineConfirm() {
+            this.confirm = false
+        },
+
+        removeUser(user) {
+            this.$store.dispatch('removeUser', user).then(res => {
+                this.confirm = false
+            })
         }
     }
 };

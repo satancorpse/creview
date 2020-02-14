@@ -13,7 +13,7 @@
                     <th class="py-2 border">Cook</th>
                     <th class="py-2 border">Rating</th>
                     <th class="py-2 border">Major Issue</th>
-                    <th class="py-2 border">Action</th>
+                    <th class="py-2 border" v-if="!isReviewer">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,9 +23,9 @@
                         <p class="mt-0 cursor-pointer" @click="redirectReview(item)">{{ item.name }}</p>
                     </td>
                     <td class="border px-4 py-2"><a href="#">{{ item.cook.name }}</a></td>
-                    <td class="border px-4 py-2 text-center">{{ item.meta_data.score_avg }}</td>
-                    <td class="border px-4 py-2 text-center">{{ item.meta_data.top_issue.type }}</td>
-                    <td class="border p-1 text-center">
+                    <td class="border px-4 py-2 text-center">{{ item.meta.avg_score }}</td>
+                    <td class="border px-4 py-2 text-center">{{ Object.keys(item.meta.top_issue)[0] }}</td>
+                    <td class="border p-1 text-center" v-if="!isReviewer">
                         <button class="btn-remove" @click.prevent="confirmRemove(item)">Remove</button>
                     </td>
                 </tr>
@@ -71,6 +71,7 @@ export default {
         ...mapGetters({
             closed_items: 'closed_items',
             selectedItem: 'selectedItem',
+            isReviewer: 'reviewer'
         }),
     },
 

@@ -2,6 +2,7 @@ import axios from "axios";
 
 const state = {
     cooks: [],
+    cook: [],
     selectedCook: {id: '', name: '', email: ''}
 };
 
@@ -12,6 +13,14 @@ const actions = {
             context.commit("cooksFetched", response.data);
         }).catch(error => {
             context.dispatch('logout')
+        });
+    },
+
+    fetchCook: (context, data) => {
+        axios.get('/api/cooks/' + data).then(response => {
+            context.commit('cookFetched', response.data);
+            }).catch(error => {
+                console.error(error);
         });
     },
 
@@ -68,6 +77,10 @@ const actions = {
 const mutations = {
     cooksFetched: (state, cooks) => {
         state.cooks = cooks;
+    },
+
+    cookFetched: (state, cook) => {
+        state.cook = cook;
     },
 
     cookCreated: (state, cook) => {

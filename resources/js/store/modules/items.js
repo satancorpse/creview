@@ -97,7 +97,7 @@ const mutations = {
             name: item.name,
             cook_id: item.cook_id,
             publish: item.publish,
-            meta_data: {},
+            meta: {},
             cook: { name: item.cook.name }
         })
     },

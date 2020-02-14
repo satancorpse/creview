@@ -2,7 +2,7 @@
     <div>
         <div class="page-title flex justify-between items-center mb-4">
             <h1 class="m-0"><i class="fa fa-book"></i> List of all items</h1>
-            <router-link to="/create-item">+ Add a new item</router-link>
+            <router-link to="/create-item" v-if="!isReviewer">+ Add a new item</router-link>
         </div>
 
         <table class="table-auto w-full" v-if="published_items.length">
@@ -11,7 +11,7 @@
                     <th class="py-2 border">#</th>
                     <th class="py-2 border">Name</th>
                     <th class="py-2 border">Cook</th>
-                    <th class="py-2 border">Action</th>
+                    <th class="py-2 border" v-if="!isReviewer">Action</th>
                 </tr>
             </thead>
 
@@ -22,7 +22,7 @@
                         <p class="mt-0 cursor-pointer" @click="redirectReview(item)">{{ item.name }}</p>
                     </td>
                     <td class="border px-4 py-2">{{ item.cook.name }}</td>
-                    <td class="border p-1 text-center">
+                    <td class="border p-1 text-center" v-if="!isReviewer">
                         <button class="btn-edit" @click.prevent="showModal(item)">Edit</button>
                         <button class="btn-remove" @click.prevent="confirmRemove(item)">Remove</button>
                     </td>
@@ -73,7 +73,8 @@ export default {
     computed: {
         ...mapGetters({
             published_items: 'published_items',
-            selectedItem: 'selectedItem'
+            selectedItem: 'selectedItem',
+            isReviewer: 'reviewer'
         }),
     },
 

@@ -6,9 +6,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from "./routes";
 import store from "./store";
+import Moment from 'vue-moment'
+
 import App from "./view/App";
 
 Vue.use(VueRouter);
+Vue.use(Moment);
 
 const router = new VueRouter(routes);
 
@@ -26,6 +29,7 @@ router.beforeEach((to, from, next) => {
         } else {
             if (to.matched.some(record => record.meta.requiresAdmin)) {
                 if (!(store.getters.god || store.getters.admin)) {
+                    console.log('not admin or super-admin')
                     next("/dashboard");
                 } else {
                     next();

@@ -2,7 +2,7 @@
     <div>
         <div class="page-title flex justify-between">
             <h1><i class="fa fa-book"></i> Available reviews</h1>
-            <router-link to="/create-item" class="link">+ Publish a new item</router-link>
+            <router-link to="/create-item" class="link" v-if="!isReviewer">+ Publish a new item</router-link>
         </div>
         <table class="table-auto w-full mb-16" v-if="published_items.length">
             <thead class="border bg-gray-200">
@@ -52,7 +52,7 @@
                         <p class="mt-0 cursor-pointer" @click="redirectReview(item)">{{ item.name }}</p>
                     </td>
                     <td class="border px-4 py-2"><a href="#">{{ item.cook.name }}</a></td>
-                    <td class="border px-4 py-2 text-center">{{ item.meta_data.score_avg }}</td>
+                    <td class="border px-4 py-2 text-center">{{ item.meta.avg_score }}</td>
                 </tr>
             </tbody>
         </table>
@@ -76,6 +76,7 @@ export default {
         ...mapGetters({
             published_items: 'published_items',
             closed_items: 'closed_items',
+            isReviewer: 'reviewer'
         }),
     },
 

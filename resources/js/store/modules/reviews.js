@@ -3,7 +3,7 @@ import axios from "axios";
 const state = {
     itemReviews: {
         cook: {},
-        meta_data: {},
+        meta: {},
         reviews: {}
     }
 };

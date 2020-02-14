@@ -14,6 +14,11 @@ class CookController extends Controller
         return response()->json($cooks, 200);
     }
 
+    public function show($id) {
+        $cook = Cook::findOrFail($id)->load('items');
+        return response()->json($cook);
+    }
+
     public function store(Request $request) {
 
         $validatedData = $request->validate([

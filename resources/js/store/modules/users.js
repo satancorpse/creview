@@ -43,6 +43,33 @@ const actions = {
             })
         })
     },
+
+    updateUser: (context, data) => {
+        return new Promise((resolve, reject) => {
+            axios.patch('/api/users/' + data.user.id, {
+                name: data.user.name,
+                email: data.user.email,
+                role: data.user.role,
+            }).then(res => {
+                context.commit('userUpdated', res.data)
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+
+    removeUser: (context, user) => {
+        console.log(user)
+        return new Promise((resolve, reject) => {
+            axios.delete('/api/users/' + user.id).then(res => {
+                context.commit('userRemoved', user.id)
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
 }
 
 const mutations = {
@@ -59,11 +86,41 @@ const mutations = {
             name: user.name,
             email: user.email
         })
+    },
+
+    updateName: (state, name) => {
+        state.user.name = name
+    },
+
+    updateEmail: (state, email) => {
+        state.user.email = email
+    },
+
+    updateRole: (state, role) => {
+        state.user.role = role
+    },
+
+    userUpdated: (state, user) => {
+        const index = state.users.findIndex(i => i.id == user.id)
+
+        state.users.splice(index, 1, {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+        })
+    },
+
+    userRemoved: (state, user) => {
+        const index = state.users.findIndex(i => i.id == user)
+
+        state.users.splice(index, 1)
     }
 };
 
 const getters = {
-    users: state => state.users
+    users: state => state.users,
+    selectedUser: state => state.user
 };
 
 export default {

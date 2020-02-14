@@ -13,87 +13,12 @@ class ItemController extends Controller
 
         $items = Item::latest()->with(['reviews', 'cook'])->get();
 
-        foreach ($items as $item) {
-            //get count and avg of scores
-            $score_count = collect($item->reviews)->count('score');
-            $score_avg = collect($item->reviews)->avg('score');
-
-            //get meta info for meta column
-            $reviews_meta = [];
-
-            $reviews = $item->reviews;
-
-            foreach($reviews as $i) {
-                $reviews_meta[] = Json_decode($i->meta, true);
-            }
-
-            $meta_array = [];
-
-            foreach ($reviews_meta as $m) {
-                foreach ($m['type'] as $n) {
-                    $meta_array[] = $n;
-                }
-            }
-
-            $count_meta = array_count_values($meta_array);
-            arsort($count_meta);
-            $meta_most = array_slice($count_meta, 0, 5, true);
-
-            $meta_data = [
-                'top_issue' => ['type' => key($meta_most), 'count' => reset($meta_most)],
-                'meta_all' => $meta_most,
-                'score_count' => $score_count,
-                'score_avg' => round($score_avg, 2)
-            ];
-
-            $item->meta_data = $meta_data;
-        }
-
-        if(Auth::user()->role == 0) {
-            $items = Item::where('publish', 1)->latest()->get();
-        }
-
         return response()->json($items, 200);
     }
 
     public function show($id) {
 
         $item = Item::findOrFail($id)->load('reviews.user', 'cook');
-
-        //get count and avg of scores
-        $score_count = collect($item->reviews)->count('score');
-        $score_avg = collect($item->reviews)->avg('score');
-
-        //get meta info for meta column
-        $reviews_meta = [];
-
-        $reviews = $item->reviews;
-
-        foreach($reviews as $i) {
-            $reviews_meta[] = Json_decode($i->meta, true);
-        }
-
-        $meta_array = [];
-
-        foreach ($reviews_meta as $m) {
-            foreach ($m['type'] as $n) {
-                $meta_array[] = $n;
-            }
-        }
-
-        $count_meta = array_count_values($meta_array);
-        arsort($count_meta);
-        $meta_most = array_slice($count_meta, 0, 5, true);
-
-        $meta_data = [
-            'top_issue' => ['type' => key($meta_most), 'count' => reset($meta_most)],
-            'meta_all' => $meta_most,
-            'score_count' => $score_count,
-            'score_avg' => round($score_avg, 2),
-            'user_has_review' => Auth::user()->reviews()->where('item_id', $item->id)->exists()
-        ];
-
-        $item->meta_data = $meta_data;
 
         return response()->json($item, 200);
     }

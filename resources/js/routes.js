@@ -6,6 +6,7 @@ import Users from './view/pages/users/Users';
 import Profile from './view/pages/users/Profile';
 import CreateUser from './view/pages/users/CreateUser';
 import Cooks from './view/pages/cooks/Cooks';
+import Cook from './view/pages/cooks/Profile';
 import CreateCook from './view/pages/cooks/CreateCook';
 import Items from './view/pages/items/Items';
 import PublishedItems from './view/pages/items/PublishedItems';
@@ -27,16 +28,17 @@ export default {
             component: Master,
             children: [
                 { path: '/', component: Dashboard, name: 'dashboard' },
-                { path: '/users', component: Users, name: 'Users', meta: {requiresGod: true}},
-                { path: '/profile/:id', component: Profile, name: 'profile', meta: {requiresGod: true}},
-                { path: '/create-user', component: CreateUser, name: 'create-user', meta: {requiresGod: true}},
-                { path: '/cooks', component: Cooks, name: 'cooks', meta: {requiresAdmin: true}},
+                { path: '/users', component: Users, name: 'Users'},
+                { path: '/profile/:id', component: Profile, name: 'profile'},
+                { path: '/create-user', component: CreateUser, name: 'create-user', meta: {requiresAdmin: true}},
+                { path: '/cooks', component: Cooks, name: 'cooks'},
+                { path: '/cooks/:id', component: Cook, name: 'cook'},
                 { path: '/create-cook', component: CreateCook, name: 'create-cook', meta: {requiresAdmin: true}},
-                { path: '/items', component: Items, name: 'items', meta: {requiresAdmin: true}},
-                { path: '/items/published', component: PublishedItems, name: 'published-items', meta: {requiresAdmin: true}},
-                { path: '/items/closed', component: ClosedItems, name: 'closed-items', meta: {requiresAdmin: true}},
+                { path: '/items', component: Items, name: 'items'},
+                { path: '/items/published', component: PublishedItems, name: 'published-items'},
+                { path: '/items/closed', component: ClosedItems, name: 'closed-items'},
                 { path: '/create-item', component: CreateItem, name: 'create-item', meta: {requiresAdmin: true}},
-                { path: '/items/:id/reviews', component: ItemReviews, name: 'item-reviews', meta: {requiresAdmin: true}},
+                { path: '/items/:id/reviews', component: ItemReviews, name: 'item-reviews'},
                 { path: '/items/:id/submit-review', component: SubmitReview, name: 'submit-review'},
                 { path: '/about', component: About }
             ],

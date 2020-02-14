@@ -16,11 +16,11 @@
                 <button
                     class="btn-primary text-xs"
                     @click.prevent="closeReview(itemReviews)"
-                    v-if="itemReviews.publish"
+                    v-if="itemReviews.publish && !isReviewer"
                 >
                     Mark as closed
                 </button>
-                <span class="text-gray-800 border px-4 py-2 mt-2" v-else
+                <span class="text-gray-800 border px-4 py-2 mt-2" v-if="!itemReviews.publish"
                     ><i class="fa fa-power-off"></i>&nbsp; Closed for new
                     reviews</span
                 >
@@ -65,21 +65,21 @@
                     <h6>
                         Total reviews:
                         <span class="text-teal-600">{{
-                            itemReviews.meta_data.score_count
+                            itemReviews.meta.reviews_count
                         }}</span>
                     </h6>
                     <h6>
                         Overall score:
                         <span class="text-teal-600">{{
-                            itemReviews.meta_data.score_avg
+                            itemReviews.meta.avg_score
                         }}</span>
                     </h6>
                     <h6>
                         <span
-                            >{{ itemReviews.meta_data.top_issue.count }} person
+                            >{{ itemReviews.meta.top_issue.count }} person
                             complaint about the
                             <span class="text-red-600 italic">{{
-                                itemReviews.meta_data.top_issue.type
+                                Object.keys(itemReviews.meta.top_issue)[0]
                             }}</span>
                             of the item.</span
                         >
@@ -95,7 +95,7 @@
             <h1 class="text-center">Nobody submitted a review yet!</h1>
         </div>
 
-        <div v-if="!itemReviews.meta_data.user_has_review">
+        <div v-if="!itemReviews.meta.user_has_review && itemReviews.publish">
             <router-link
                 v-if="itemReviews.id"
                 :to="{ name: 'submit-review', params: { id: itemReviews.id } }"
@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
     data() {
@@ -128,6 +128,10 @@ export default {
     computed: {
         ...mapState({
             itemReviews: state => state.reviews.itemReviews
+        }),
+
+        ...mapGetters({
+            isReviewer: 'reviewer'
         })
     },
 

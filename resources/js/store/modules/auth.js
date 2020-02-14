@@ -70,6 +70,7 @@ const getters = {
     signedIn: state => state.access_token !== null,
     god: state => state.auth_user.user.role === 1,
     admin: state => state.auth_user.user.role === 2,
+    reviewer: state => state.auth_user.user.role === 0,
     token: state => state.access_token,
     authId: state => state.auth_user.user.id,
     firstName: state => state.auth_user.user.name.split(' ').slice(-2).join(' ')
